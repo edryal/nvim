@@ -19,7 +19,11 @@ map("n", "Q", ":only<cr>", opts)
 -- ESC to clear highlights after search
 map("n", "<Esc>", ":noh<cr> :helpclose<cr>", opts)
 
--- Easily split windows
+-- Easily manage windows
+map("n", "<A-h>", "<C-w>h", opts)
+map("n", "<A-j>", "<C-w>j", opts)
+map("n", "<A-k>", "<C-w>k", opts)
+map("n", "<A-l>", "<C-w>l", opts)
 map("n", "<leader>wv", ":vsplit<cr>", Expand_Opts("Split Vertical"))
 map("n", "<leader>wh", ":split<cr>", Expand_Opts("Split Horizontal"))
 

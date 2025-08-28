@@ -51,5 +51,6 @@
   "vim-illuminate": { "branch": "master", "commit": "0d1e93684da00ab7c057410fecfc24f434698898" },
   "vim-matchup": { "branch": "master", "commit": "b4efd6a97380b99bb9f5eb80c9002e061402c288" },
   "vim-undodir-tree": { "branch": "master", "commit": "f5cd1779b1a3969ba8b09a041863538b08e7ff32" },
-  "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" }
+  "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
+  "winresizer.nvim": { "branch": "main", "commit": "3cc4f122bfe182e22c4032ec741bd705a0cb3c48" }
 }

@@ -71,7 +71,7 @@ return {
     map("n", "<leader>gb", ":FzfLua git_branches<cr>", Expand_Opts("Branches"))
     map("n", "<leader>gs", ":FzfLua git_status<cr>", Expand_Opts("Status"))
     map("n", "<leader>gS", ":FzfLua git_stash<cr>", Expand_Opts("Stash"))
-    map("n", "<leader>gC", ":FzfLua git_commits<cr>", Expand_Opts("Project Commits"))
+    map("n", "<leader>gC", ":FzfLua git_commits<cr>", Expand_Opts("Commits"))
 
     -- Lsp
     map("n", "gd", ":FzfLua lsp_definitions<cr>", Expand_Opts("Goto Definition"))

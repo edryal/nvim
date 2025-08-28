@@ -9,7 +9,6 @@ return {
     event = "CursorHold",
     keys = {
       { "<leader>gr", ":Gitsigns reset_hunk<cr>", mode = "n", desc = "Reset Hunk", silent = true, noremap = true },
-      { "<leader>gr", ":Gitsigns reset_hunk<cr>", mode = "n", desc = "Reset Hunks", silent = true, noremap = true },
       { "<leader>gR", ":Gitsigns reset_buffer<cr>", mode = "n", desc = "Reset Buffer", silent = true, noremap = true },
       { "<leader>gp", ":Gitsigns preview_hunk<cr>", mode = "n", desc = "Preview Hunk", silent = true, noremap = true },
       { "<leader>gB", ":Gitsigns blame_line<cr>", mode = "n", desc = "Blame Line", silent = true, noremap = true },
@@ -63,7 +62,7 @@ return {
     cmd = { "DiffviewOpen", "DiffviewClose" },
     keys = {
       {
-        "<leader>tw",
+        "<leader>gd",
         function()
           local lib = require("diffview.lib")
           local view = lib.get_current_view()

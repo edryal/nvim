@@ -72,7 +72,7 @@ local function get_jdtls_paths()
   -- Include java-test bundle if present
   ---
   local java_test_path = mason_packages .. "/java-test"
-  local java_test_bundle = vim.split(vim.fn.glob(java_test_path .. '/extension/server/*.jar'), '\n')
+  local java_test_bundle = vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar"), "\n")
 
   -- Useful when building test bundles manually
   -- local java_test_bundle = vim.split(vim.fn.glob(home .. "/vscode-java-test-0.43.1/server/*.jar"), "\n")
@@ -153,7 +153,7 @@ local function jdtls_on_attach(client, bufnr)
 
   set("n", "<leader>ju", function()
     jdtls.update_project_config()
-  end, Expand_Opts("Refresh Project Config"))
+  end, Expand_Opts("Refresh Project"))
 
   -- Refactoring
   set("n", "<leader>jev", function()
@@ -183,7 +183,7 @@ local function jdtls_on_attach(client, bufnr)
 
   -- Commands
   set("n", "<leader>jr", "<cmd>JdtSetRuntime<cr>", Expand_Opts("Set Java Runtime"))
-  set("n", "<leader>jc", "<cmd>JdtCompile<cr>", Expand_Opts("Compile Project"))
+  set("n", "<leader>jc", "<cmd>JdtCompile full<cr>", Expand_Opts("Compile Project"))
 
   -- Testing
   set("n", "<leader>jtp", function()
@@ -270,7 +270,7 @@ local function jdtls_setup()
           -- You can define the java home especially for the JDTLS server here. In this way it doesn't matter what is your JAVA_HOME environmental variable anymore.
           -- Convenient to solve version mismatches for some old projects
           java = { home = path.runtimes[1].path },
-          vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx6G -Xms256m",
+          vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms256m",
         },
       },
       server = {

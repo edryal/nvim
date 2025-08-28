@@ -28,6 +28,7 @@ map("n", "<leader>ct", ":TodoFzfLua<cr>", Expand_Opts("TODOs"))
 
 -- [[ Toggles ]]
 map("n", "<leader>td", ":lua vim.diagnostic.enable(not vim.diagnostic.is_enabled())<cr>", Expand_Opts("Diagnostics"))
+map("n", "<leader>tr", ":set rnu!<cr>", Expand_Opts("Relative Line Numbers"))
 
 -- [[ Buffers ]]
 map("n", "<leader>bo", ":BufDelOthers<cr>", Expand_Opts("Close All Other Buffers"))

@@ -78,6 +78,7 @@ return {
 
       if features.java.enabled then
         add("java-test")
+        add("vscode-spring-boot-tools")
         if features.java.debugger then
           add("java-debug-adapter")
         end

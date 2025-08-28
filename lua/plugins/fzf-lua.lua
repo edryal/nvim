@@ -42,6 +42,7 @@ return {
     map("n", "<leader>fg", ":FzfLua git_files<cr>", Expand_Opts("Git Files"))
     map("n", "<leader>fq", ":FzfLua quickfix<cr>", Expand_Opts("Quickfix List"))
     map("n", "<leader>fl", ":FzfLua files resume=true<cr>", Expand_Opts("Last Files"))
+    map("n", "<leader>fw", ":FzfLua lsp_live_workspace_symbols<cr>", Expand_Opts("Workspace Symbols"))
 
     local function config_files()
       return FzfLua.files({ cwd = vim.fn.stdpath("config") })

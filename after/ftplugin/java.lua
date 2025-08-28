@@ -71,59 +71,32 @@ local function get_jdtls_paths()
   ---
   -- Include java-test bundle if present
   ---
+  local java_test_path = mason_packages .. "/java-test"
+  local java_test_bundle = vim.split(vim.fn.glob(java_test_path .. '/extension/server/*.jar'), '\n')
 
-  -- local java_test_path = require('mason-registry')
-  --     .get_package('java-test')
-  --     :get_install_path()
-
-  -- local java_test_bundle = vim.split(
-  --   vim.fn.glob(java_test_path .. '/extension/server/*.jar'),
-  --   '\n'
-  -- )
-
-  -- hardcoded path because mason doesn't have java-test 0.43.1 which fixes testing issues in nvim-jdtls
-  -- clone the repo from vscode-java-test, 'npm install' and then 'npm run build-plugin'
-  -- after that you'll see the server directory which contains all the jars (bundles) needed
-  local java_test_bundle = vim.split(vim.fn.glob(home .. "/vscode-java-test-0.43.1/server/*.jar"), "\n")
+  -- Useful when building test bundles manually
+  -- local java_test_bundle = vim.split(vim.fn.glob(home .. "/vscode-java-test-0.43.1/server/*.jar"), "\n")
 
   if java_test_bundle[1] ~= "" then
     vim.list_extend(path.bundles, java_test_bundle)
   end
 
   ---
+  -- Include springboot bundle if present
+  ---
+  vim.list_extend(path.bundles, require("spring_boot").java_extensions())
+
+  ---
   -- Useful if you're starting jdtls with a Java version that's
   -- different from the one the project uses.
   ---
 
-  if vim.fn.has("unix") == 1 then
-    path.runtimes = {
-      {
-        name = "JavaSE-21",
-        path = home .. "/.sdkman/candidates/java/21.0.7-tem",
-      },
-      {
-        name = "JavaSE-17",
-        path = home .. "/.sdkman/candidates/java/17.0.15-tem",
-        default = true,
-      },
-      {
-        name = "JavaSE-11",
-        path = home .. "/.sdkman/candidates/java/11.0.27-tem",
-      },
-    }
-  elseif vim.fn.has("win32") == 1 then
-    path.runtimes = {
-      {
-        name = "JavaSE-21",
-        path = "C:/Program Files/Java/jdk-21/",
-      },
-      {
-        name = "JavaSE-17",
-        path = "C:/Program Files/Java/jdk-17/",
-        default = true,
-      },
-    }
-  end
+  path.runtimes = {
+    {
+      name = "JavaSE-21",
+      path = home .. "/.sdkman/candidates/java/21.0.8-tem",
+    },
+  }
 
   cache_vars.paths = path
 

@@ -1,7 +1,7 @@
 local features = {
   inlay_hint = false,
   navic = {
-    enabled = true,
+    enabled = false,
     limit = 5,
   },
   web = {

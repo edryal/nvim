@@ -17,6 +17,7 @@ return {
         { "<leader>gc", group = "Conflict" },
         { "<leader>jt", group = "Test" },
         { "<leader>je", group = "Extract" },
+        { "<leader>jg", group = "Generate" },
       },
       {
         mode = { "n", "v" },

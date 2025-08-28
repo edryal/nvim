@@ -13,8 +13,14 @@ return {
         { "<leader>o", group = "Open" },
         { "<leader>b", group = "Buffers" },
 
+        -- Code Action
         { "<leader>cd", group = "Diagnostics" },
+
+        -- Git
         { "<leader>gc", group = "Conflict" },
+
+        -- Java
+        { "<leader>m", group = "Maven" },
         { "<leader>jt", group = "Test" },
         { "<leader>je", group = "Extract" },
         { "<leader>jg", group = "Generate" },

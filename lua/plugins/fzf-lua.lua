@@ -15,6 +15,14 @@ return {
       },
       fzf_colors = true,
       keymap = {
+        builtin = {
+          ["<a-f>"] = "toggle-fullscreen",
+          ["<a-p>"] = "toggle-preview",
+          ["<a-d>"] = "preview-page-down",
+          ["<a-u>"] = "preview-page-up",
+          ["<a-r>"] = "preview-page-reset",
+          ["<a-w>"] = "toggle-preview-wrap",
+        },
         fzf = {
           ["home"] = "first",
           ["end"] = "last",
@@ -23,8 +31,6 @@ return {
           ["ctrl-u"] = "half-page-up",
           ["ctrl-a"] = "beginning-of-line",
           ["ctrl-e"] = "end-of-line",
-          ["ctrl-f"] = "preview-page-down",
-          ["ctrl-b"] = "preview-page-up",
           ["ctrl-q"] = "select-all+accept",
         },
       },

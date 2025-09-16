@@ -12,18 +12,14 @@ return {
         { "<leader>n", group = "Notification" },
         { "<leader>o", group = "Open" },
         { "<leader>b", group = "Buffers" },
-
-        -- Code Action
         { "<leader>cd", group = "Diagnostics" },
-
-        -- Git
         { "<leader>gc", group = "Conflict" },
 
         -- Java
         { "<leader>m", group = "Maven" },
         { "<leader>jt", group = "Test" },
-        { "<leader>je", group = "Extract" },
         { "<leader>jg", group = "Generate" },
+        { "<leader>jj", group = "Jacoco" },
       },
       {
         mode = { "n", "v" },
@@ -31,6 +27,7 @@ return {
         { "<leader>j", group = "Java" },
         { "<leader>g", group = "Git" },
         { "<leader>s", group = "Search" },
+        { "<leader>je", group = "Extract" },
       },
     },
   },

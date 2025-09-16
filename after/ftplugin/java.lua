@@ -147,56 +147,23 @@ local function jdtls_on_attach(client, bufnr)
   }
 
   local set = vim.keymap.set
-  set("n", "<leader>jo", function()
-    jdtls.organize_imports()
-  end, Expand_Opts("Organize Imports"))
-
-  set("n", "<leader>ju", function()
-    jdtls.update_project_config()
-  end, Expand_Opts("Refresh Project"))
+  set("n", "<leader>jo", "<cmd>lua require'jdtls'.organize_imports()<cr>", Expand_Opts("Organize Imports"))
+  set("n", "<leader>ju", "<cmd>lua require'jdtls'.update_project_config()<cr>", Expand_Opts("Refresh Project"))
 
   -- Refactoring
-  set("n", "<leader>jev", function()
-    jdtls.extract_variable()
-  end, Expand_Opts("Variable"))
-
-  set("n", "<leader>jec", function()
-    jdtls.extract_constant()
-  end, Expand_Opts("Constant"))
-
-  set("n", "<leader>jem", function()
-    jdtls.extract_method({ visual = true })
-  end, Expand_Opts("Method"))
-
-  -- Refactoring in Visual Mode
-  set("v", "<leader>jev", function()
-    jdtls.extract_variable()
-  end, Expand_Opts("Variable"))
-
-  set("v", "<leader>jec", function()
-    jdtls.extract_constant()
-  end, Expand_Opts("Constant"))
-
-  set("v", "<leader>jem", function()
-    jdtls.extract_method({ visual = true })
-  end, Expand_Opts("Method"))
+  set("n", "<leader>jev", "<cmd>lua require('jdtls').extract_variable()<cr>", Expand_Opts("Variable"))
+  set("n", "<leader>jec", "<cmd>lua require('jdtls').extract_constant()<cr>", Expand_Opts("Constant"))
+  set("v", "<leader>jev", "<esc><cmd>lua require('jdtls').extract_variable(true)<cr>", Expand_Opts("Variable"))
+  set("v", "<leader>jem", "<esc><cmd>lua require('jdtls').extract_method(true)<cr>", Expand_Opts("Method"))
 
   -- Commands
   set("n", "<leader>jr", "<cmd>JdtSetRuntime<cr>", Expand_Opts("Set Java Runtime"))
   set("n", "<leader>jc", "<cmd>JdtCompile full<cr>", Expand_Opts("Compile Project"))
 
   -- Testing
-  set("n", "<leader>jtp", function()
-    jdtls.pick_test(test_opts)
-  end, Expand_Opts("Pick Method"))
-
-  set("n", "<leader>jtm", function()
-    jdtls.test_nearest_method(test_opts)
-  end, Expand_Opts("Method"))
-
-  set("n", "<leader>jtc", function()
-    jdtls.test_class(test_opts)
-  end, Expand_Opts("Class"))
+  set("n", "<leader>jtp", function() jdtls.pick_test(test_opts) end, Expand_Opts("Pick Method"))
+  set("n", "<leader>jtm", function() jdtls.test_nearest_method(test_opts) end, Expand_Opts("Method Under Cursor"))
+  set("n", "<leader>jtc", function() jdtls.test_class(test_opts) end, Expand_Opts("Entire Class"))
 end
 
 local function jdtls_setup()

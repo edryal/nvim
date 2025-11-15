@@ -109,4 +109,18 @@ M.setup_java_debugger = function(dap)
   })
 end
 
+M.setup_python_debugger = function(dap)
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "python",
+    callback = function()
+      require("dap-python").setup("python3")
+
+      local map = vim.api.nvim_set_keymap
+      map("n", "<leader>ptm", ":lua require('dap-python').test_method()<cr>", Expand_Opts("Method"))
+      map("n", "<leader>ptc", ":lua require('dap-python').test_class()<cr>", Expand_Opts("Class"))
+      map("v", "<leader>pts", ":lua require('dap-python').debug_selection()<cr>", Expand_Opts("Selection"))
+    end,
+  })
+end
+
 return M

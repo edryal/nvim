@@ -5,6 +5,7 @@ return {
     "nvim-neotest/nvim-nio",
     { "theHamsta/nvim-dap-virtual-text", opts = {} },
     "leoluz/nvim-dap-go",
+    "mfussenegger/nvim-dap-python",
   },
   config = function()
     local dap = require("dap")
@@ -23,6 +24,10 @@ return {
 
     if features.java.debugger then
       util.setup_java_debugger(dap)
+    end
+
+    if features.python.debugger then
+      util.setup_python_debugger(dap)
     end
   end,
 }

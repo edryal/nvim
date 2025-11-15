@@ -7,6 +7,8 @@ return {
       formatters_by_ft = {
         lua = { "stylua" },
         go = { "goimports" },
+        python = { "black" },
+        cpp = { "clang-format" },
         html = { "prettier" },
         css = { "prettier" },
         json = { "prettier" },

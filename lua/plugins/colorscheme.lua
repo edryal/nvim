@@ -42,6 +42,9 @@ return {
     event = "ColorScheme",
   },
   {
+    "nyoom-engineering/oxocarbon.nvim",
+  },
+  {
     "brenoprata10/nvim-highlight-colors",
     event = "BufEnter",
     keys = {

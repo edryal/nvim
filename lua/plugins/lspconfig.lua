@@ -28,6 +28,11 @@ return {
         add("gopls")
       end
 
+      if features.python.enabled then
+        -- add("pylsp")
+        add("basedpyright")
+      end
+
       if features.java.enabled then
         add("jdtls")
         add("lemminx")
@@ -38,7 +43,13 @@ return {
         add("cssls")
         add("jsonls")
         add("vtsls")
-        add("angularls")
+        add("svelte")
+        -- add("angularls")
+      end
+
+      if features.cpp.enabled then
+        add("clangd")
+        add("cmake")
       end
 
       require("mason-lspconfig").setup({
@@ -86,6 +97,15 @@ return {
 
       if features.web.enabled then
         add("prettier")
+      end
+
+      if features.python.enabled then
+        add("black")
+        add("isort")
+      end
+
+      if features.cpp.enabled then
+        add("clang-format")
       end
 
       require("mason-tool-installer").setup({

@@ -59,8 +59,24 @@ return {
   },
   {
     "sindrets/diffview.nvim",
-    cmd = { "DiffviewOpen", "DiffviewClose" },
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
     keys = {
+      {
+        "<leader>gh",
+        function()
+          local lib = require("diffview.lib")
+          local view = lib.get_current_view()
+          if view then
+            vim.cmd.DiffviewClose()
+          else
+            vim.cmd.DiffviewFileHistory()
+          end
+        end,
+        mode = "n",
+        desc = "Diffview History",
+        silent = true,
+        noremap = true,
+      },
       {
         "<leader>gd",
         function()
@@ -76,6 +92,17 @@ return {
         desc = "Diffview",
         silent = true,
         noremap = true,
+      },
+    },
+    opts = {
+      use_icons = true,
+      enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
+      view = {
+        default = { layout = "diff2_horizontal" },
+        merge_tool = {
+          layout = "diff4_mixed",
+          disable_diagnostics = true,
+        },
       },
     },
   },

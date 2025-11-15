@@ -11,11 +11,18 @@ local features = {
     enabled = true,
     debugger = true,
   },
+  python = {
+    enabled = true,
+    debugger = true,
+  },
   java = {
     enabled = true,
     codelens = true,
     debugger = true,
     springboot = true,
+  },
+  cpp = {
+    enabled = true,
   },
 }
 

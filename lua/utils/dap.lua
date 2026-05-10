@@ -86,7 +86,21 @@ M.setup_java_debugger = function(dap)
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "java",
     callback = function()
+      local ctower = "/home/catalin/Projects/c-tower/"
+      local java_path = "/home/catalin/Documents/jdk1.8.0_202"
       dap.configurations.java = {
+        -- Custom & project specific configurations
+        {
+          type = "java",
+          javaExec = java_path .. "/bin/java",
+          request = "launch",
+          name = "Test Class CTRicevimentoMerciGetArticoliSenzaPresaServiceTest",
+          mainClass = "it.ditech.logistica.webapi.CTRicevimentoMerciGetArticoliSenzaPresaServiceTest",
+          classPaths = { ctower .. "/logistica/bin" },
+          cwd = ctower .. "/logistica",
+          vmArgs = "-ea",
+          console = "internalConsole",
+        },
         {
           type = "java",
           request = "launch",
@@ -100,9 +114,9 @@ M.setup_java_debugger = function(dap)
           request = "attach",
           console = "internalConsole",
           shortenCommandLine = "argfile",
-          name = "Debug (Attach :: 5005)",
-          hostName = "127.0.0.1",
-          port = 5005,
+          name = "Remote Debug Logistica (Attach :: 8897)",
+          hostName = "172.26.220.40",
+          port = 8897,
         },
       }
     end,

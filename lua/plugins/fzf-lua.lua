@@ -45,7 +45,6 @@ return {
 
     -- Find
     map("n", "<leader>ff", ":FzfLua files<cr>", Expand_Opts("Files"))
-    map("n", "<leader>fg", ":FzfLua git_files<cr>", Expand_Opts("Git Files"))
     map("n", "<leader>fq", ":FzfLua quickfix<cr>", Expand_Opts("Quickfix List"))
     map("n", "<leader>fl", ":FzfLua files resume=true<cr>", Expand_Opts("Last Files"))
     map("n", "<leader>fw", ":FzfLua lsp_live_workspace_symbols<cr>", Expand_Opts("Workspace Symbols"))
@@ -64,14 +63,45 @@ return {
     map("n", "<leader>sl", ":FzfLua live_grep_native<cr>", Expand_Opts("Live Grep"))
     map("n", "<leader>sr", ":FzfLua live_grep_resume<cr>", Expand_Opts("Resume Live Grep"))
     map("n", "<leader>sw", ":FzfLua grep_cword<cr>", Expand_Opts("Grep Word"))
+    map("n", "<leader>sb", ":FzfLua lgrep_curbuf<cr>", Expand_Opts("Live Grep Buffer"))
     map("v", "<leader>sw", ":FzfLua grep_cword<cr>", Expand_Opts("Grep Word"))
     map("v", "<leader>ss", ":FzfLua grep_visual<cr>", Expand_Opts("Grep Selection"))
 
     -- Git
-    map("n", "<leader>gb", ":FzfLua git_branches<cr>", Expand_Opts("Branches"))
-    map("n", "<leader>gs", ":FzfLua git_status<cr>", Expand_Opts("Status"))
-    map("n", "<leader>gS", ":FzfLua git_stash<cr>", Expand_Opts("Stash"))
-    map("n", "<leader>gC", ":FzfLua git_commits<cr>", Expand_Opts("Commits"))
+    local git_repos = {
+      ["logistica"] = vim.fn.expand("~/Projects/c-tower/logistica/"),
+      ["corelogistca"] = vim.fn.expand("~/Projects/c-tower/corelogistica/"),
+    }
+
+    local function get_static_git_root()
+      local path = vim.fn.expand("%:p")
+      for _, repo_path in pairs(git_repos) do
+        if path:find(repo_path, 1, true) then
+          return repo_path
+        end
+      end
+      return nil
+    end
+
+    set("n", "<leader>gb", function()
+      FzfLua.git_branches({ cwd = get_static_git_root() })
+    end, Expand_Opts("Branches"))
+
+    set("n", "<leader>gs", function()
+      FzfLua.git_status({ cwd = get_static_git_root() })
+    end, Expand_Opts("Status"))
+
+    set("n", "<leader>gS", function()
+      FzfLua.git_stash({ cwd = get_static_git_root() })
+    end, Expand_Opts("Stash"))
+
+    set("n", "<leader>gC", function()
+      FzfLua.git_commits({ cwd = get_static_git_root() })
+    end, Expand_Opts("Commits"))
+
+    set("n", "<leader>fg", function()
+      FzfLua.git_files({ cwd = get_static_git_root() })
+    end, Expand_Opts("Git Files"))
 
     -- Lsp
     map("n", "gd", ":FzfLua lsp_definitions<cr>", Expand_Opts("Goto Definition"))

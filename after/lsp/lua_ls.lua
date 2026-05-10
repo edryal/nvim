@@ -18,7 +18,7 @@ return {
     ".git",
   },
   capabilities = capabilities,
-  on_attach = custom_attach,
+  -- on_attach = custom_attach,
   settings = {
     Lua = {
       diagnostics = {

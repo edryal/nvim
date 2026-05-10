@@ -29,15 +29,19 @@ return {
       end
 
       if features.java.enabled then
-        add("jdtls")
+        -- add("jdtls")
         add("lemminx")
+        add("jsonls")
+
+        if features.java.web then
+          add("html")
+          add("vtsls")
+        end
       end
 
       if features.web.enabled then
         add("html")
         add("cssls")
-        add("jsonls")
-        add("vtsls")
         add("angularls")
       end
 
@@ -78,7 +82,9 @@ return {
 
       if features.java.enabled then
         add("java-test")
-        add("vscode-spring-boot-tools")
+        if features.java.springboot then
+          add("vscode-spring-boot-tools")
+        end
         if features.java.debugger then
           add("java-debug-adapter")
         end

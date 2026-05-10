@@ -15,7 +15,7 @@ return {
       },
     },
   },
-  event = "InsertEnter",
+  event = "VimEnter",
   version = "1.*",
   opts = function()
     return {

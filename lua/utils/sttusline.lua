@@ -61,17 +61,4 @@ if has_navic then
   }
 end
 
-local colors = require("utils.colors")
-M.macro_recording = {
-  name = "macro_recording",
-  event = { "RecordingEnter", "RecordingLeave" },
-  colors = { fg = colors.red },
-  update = function()
-    return "Recording @" .. vim.fn.reg_recording()
-  end,
-  condition = function()
-    return vim.fn.reg_recording() ~= ""
-  end,
-}
-
 return M

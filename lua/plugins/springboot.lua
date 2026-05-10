@@ -87,7 +87,9 @@ local function sync_java_identifier_name()
 
   -- Get the current name
   local line_content = vim.fn.getline(line_number)
-  local current_name = string.match(line_content, "([%w_]+)%s*{?$")
+  local current_name = string.match(line_content, "class%s+([%w_]+)")
+    or string.match(line_content, "enum%s+([%w_]+)")
+    or string.match(line_content, "interface%s+([%w_]+)")
 
   -- If a name was found and it's different from the filename, replace it
   if current_name and current_name ~= expected_name then
@@ -101,32 +103,37 @@ local function sync_java_identifier_name()
   end
 end
 
+vim.keymap.set('n', '<leader>jgc', function() generate_java_boilerplate('class') end, { desc = "Generate Class" })
+vim.keymap.set('n', '<leader>jge', function() generate_java_boilerplate('enum') end, { desc = "Generate Enum" } )
+vim.keymap.set('n', '<leader>jgi', function() generate_java_boilerplate('interface') end, { desc = "Generate Interface" })
+vim.keymap.set('n', '<leader>jgn', sync_java_identifier_name, { desc = "Sync Name to Filename" })
+
 return {
-  {
-    "JavaHello/spring-boot.nvim",
-    ft = { "java", "yaml", "jproperties" },
-    dependencies = {
-      "mfussenegger/nvim-jdtls",
-    },
-    opts = {},
-  },
-  {
-    "elmcgill/springboot-nvim",
-    ft = "java",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "mfussenegger/nvim-jdtls",
-    },
-    config = function()
-      local springboot_nvim = require("springboot-nvim")
-      vim.keymap.set("n", "<leader>js", springboot_nvim.boot_run, { desc = "Run Project" })
-
-      vim.keymap.set('n', '<leader>jgc', function() generate_java_boilerplate('class') end, { desc = "Generate Class" })
-      vim.keymap.set('n', '<leader>jge', function() generate_java_boilerplate('enum') end, { desc = "Generate Enum" } )
-      vim.keymap.set('n', '<leader>jgi', function() generate_java_boilerplate('interface') end, { desc = "Generate Interface" })
-      vim.keymap.set('n', '<leader>jgn', sync_java_identifier_name, { desc = "Sync Name to Filename" })
-
-      springboot_nvim.setup({})
-    end,
-  },
+  -- {
+  --   "JavaHello/spring-boot.nvim",
+  --   ft = { "java", "yaml", "jproperties" },
+  --   dependencies = {
+  --     "mfussenegger/nvim-jdtls",
+  --   },
+  --   opts = {},
+  -- },
+  -- {
+  --   "elmcgill/springboot-nvim",
+  --   ft = "java",
+  --   dependencies = {
+  --     "neovim/nvim-lspconfig",
+  --     "mfussenegger/nvim-jdtls",
+  --   },
+  --   config = function()
+  --     local springboot_nvim = require("springboot-nvim")
+  --     vim.keymap.set("n", "<leader>js", springboot_nvim.boot_run, { desc = "Run Project" })
+  --
+  --     vim.keymap.set('n', '<leader>jgc', function() generate_java_boilerplate('class') end, { desc = "Generate Class" })
+  --     vim.keymap.set('n', '<leader>jge', function() generate_java_boilerplate('enum') end, { desc = "Generate Enum" } )
+  --     vim.keymap.set('n', '<leader>jgi', function() generate_java_boilerplate('interface') end, { desc = "Generate Interface" })
+  --     vim.keymap.set('n', '<leader>jgn', sync_java_identifier_name, { desc = "Sync Name to Filename" })
+  --
+  --     springboot_nvim.setup({})
+  --   end,
+  -- },
 }

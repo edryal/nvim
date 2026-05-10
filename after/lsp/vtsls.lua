@@ -17,6 +17,7 @@ return {
     "typescript",
     "typescriptreact",
     "typescript.tsx",
+    "jsp",
   },
   root_markers = { "tsconfig.json", "package.json", "jsconfig.json", ".git" },
   capabilities = capabilities,

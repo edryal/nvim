@@ -4,7 +4,7 @@ return {
   config = function()
     local features = require("settings.features")
     if not features.navic.enabled then
-      vim.notify("Navic has been disabled. Check settings.features to manually enable it.", vim.log.levels.INFO)
+      -- vim.notify("Navic has been disabled. Check settings.features to manually enable it.", vim.log.levels.INFO)
       return nil
     end
 

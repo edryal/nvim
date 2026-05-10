@@ -5,17 +5,18 @@ local features = {
     limit = 5,
   },
   web = {
-    enabled = true,
+    enabled = false,
   },
   go = {
-    enabled = true,
-    debugger = true,
+    enabled = false,
+    debugger = false,
   },
   java = {
     enabled = true,
     codelens = true,
     debugger = true,
-    springboot = true,
+    springboot = false,
+    web = true,
   },
 }
 

@@ -51,13 +51,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
     bufmap("n", "K", ":lua vim.lsp.buf.hover()<cr>", "Show Hover information")
     bufmap("n", "gR", ":lua vim.lsp.buf.rename()<cr>", "Rename all references")
     bufmap("n", "gl", ":lua vim.diagnostic.open_float()<cr>", "Floating Diagnostics")
-    bufmap("n", "gp", ":lua vim.diagnostic.goto_prev()<cr>", "Go To Previous Diagnostic")
-    bufmap("n", "gn", ":lua vim.diagnostic.goto_next()<cr>", "Go To Next Diagnostic")
+    -- bufmap("n", "gp", ":lua vim.diagnostic.goto_prev()<cr>", "Go To Previous Diagnostic")
+    -- bufmap("n", "gn", ":lua vim.diagnostic.goto_next()<cr>", "Go To Next Diagnostic")
 
     bufmap("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<cr>", "Code Action")
     bufmap("v", "<leader>ca", ":lua vim.lsp.buf.code_action()<cr>", "Code Action")
-    bufmap("n", "<leader>cf", ":lua require('conform').format({ async = true, lsp_fallback = true })<cr>", "Format")
-    -- bufmap("n", "<leader>cf", ":lua vim.lsp.buf.format({async = true})<cr>", "Format")
+
+    if vim.bo.filetype == "java" then
+      bufmap("n", "<leader>cf", ":lua vim.lsp.buf.format()<cr>", "Format Java")
+    else
+      bufmap("n", "<leader>cf", ":lua require('conform').format({ async = true, lsp_fallback = true })<cr>", "Format")
+    end
 
     bufmap("n", "<leader>cde", ":Trouble diagnostics filter.severity=vim.diagnostic.severity.ERROR<cr>", "All Errors")
     bufmap("n", "<leader>cdb", ":Trouble diagnostics toggle filter.buf=0 focus = true<cr>", "In Buffer")

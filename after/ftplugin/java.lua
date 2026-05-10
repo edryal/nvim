@@ -1,11 +1,15 @@
-if vim.bo.filetype ~= "java" then
+if vim.bo.filetype ~= "java" and vim.bo.filetype ~= "jsp" then
   return
 end
 
 local root_markers = {
-  ".git",
-  "mvnw",
-  "gradlew",
+  -- ".git",
+  -- ".jdtls-root",
+  -- "mvnw",
+  -- "gradlew",
+
+  "logistica.iml",
+  "logistica.eml",
 
   -- 'pom.xml',
   -- 'build.gradle',
@@ -13,14 +17,9 @@ local root_markers = {
 
 local jdtls = require("jdtls")
 
-local function is_java_project()
-  return jdtls.setup.find_root(root_markers) ~= nil
-end
-
-if not is_java_project() then
-  vim.notify("Not in a Java project, skipping JDTLS setup", vim.log.levels.DEBUG)
-  return
-end
+-- local root_dir = vim.fs.root(0, root_markers)
+local root_dir = "/home/catalin/Projects/c-tower"
+-- local root_dir = "/home/catalin/Projects/java_ee_serv"
 
 local cache_vars = {}
 local java_cmds = vim.api.nvim_create_augroup("java_cmds", { clear = true })
@@ -84,7 +83,11 @@ local function get_jdtls_paths()
   ---
   -- Include springboot bundle if present
   ---
-  vim.list_extend(path.bundles, require("spring_boot").java_extensions())
+
+  local features = require("settings.features")
+  if features.java.springboot then
+    vim.list_extend(path.bundles, require("spring_boot").java_extensions())
+  end
 
   ---
   -- Useful if you're starting jdtls with a Java version that's
@@ -92,9 +95,23 @@ local function get_jdtls_paths()
   ---
 
   path.runtimes = {
+    -- {
+    --   name = "JavaSE-21",
+    --   path = home .. "/.sdkman/candidates/java/21.0.8-tem",
+    -- },
+    -- {
+    --   name = "JavaSE-17",
+    --   path = home .. "/.sdkman/candidates/java/17.0.16-tem",
+    -- },
+    -- {
+    --   name = "JavaSE-1.8",
+    --   path = home .. "/.sdkman/candidates/java/8.0.462-tem",
+    --   default = true,
+    -- },
     {
-      name = "JavaSE-21",
-      path = home .. "/.sdkman/candidates/java/21.0.8-tem",
+      name = "JavaSE-1.8",
+      path = home .. "/Documents/jdk1.8.0_202",
+      default = true,
     },
   }
 
@@ -133,17 +150,18 @@ local function jdtls_on_attach(client, bufnr)
 
   if features.navic.enabled then
     require("utils.lsp").attach_navic(client, bufnr)
-  else
-    vim.notify("Navic integration has been disabled", vim.log.levels.INFO)
   end
 
   local test_opts = {
     config = {
       console = "internalConsole",
     },
-    config_overrides = {
-      shortenCommandLine = "argfile",
+    junit = {
+      useJUnitPlatform = true,
     },
+    -- config_overrides = {
+    --   shortenCommandLine = "argfile",
+    -- },
   }
 
   local set = vim.keymap.set
@@ -161,9 +179,15 @@ local function jdtls_on_attach(client, bufnr)
   set("n", "<leader>jc", "<cmd>JdtCompile full<cr>", Expand_Opts("Compile Project"))
 
   -- Testing
-  set("n", "<leader>jtp", function() jdtls.pick_test(test_opts) end, Expand_Opts("Pick Method"))
-  set("n", "<leader>jtm", function() jdtls.test_nearest_method(test_opts) end, Expand_Opts("Method Under Cursor"))
-  set("n", "<leader>jtc", function() jdtls.test_class(test_opts) end, Expand_Opts("Entire Class"))
+  set("n", "<leader>jtp", function()
+    jdtls.pick_test(test_opts)
+  end, Expand_Opts("Pick Method"))
+  set("n", "<leader>jtm", function()
+    jdtls.test_nearest_method(test_opts)
+  end, Expand_Opts("Method Under Cursor"))
+  set("n", "<leader>jtc", function()
+    jdtls.test_class(test_opts)
+  end, Expand_Opts("Entire Class"))
 end
 
 local function jdtls_setup()
@@ -173,8 +197,9 @@ local function jdtls_setup()
     return {}
   end
 
-  local workspace_dir = path.workspace_dir .. "/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-  local project_root_dir = jdtls.setup.find_root(root_markers)
+  -- local workspace_dir = path.workspace_dir .. "/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+  local workspace_dir = path.workspace_dir .. "/c-tower"
+  -- "/home/catalin/Projects/c-tower"
 
   -- LSP capabilities to override
   local capabilities = {
@@ -236,8 +261,8 @@ local function jdtls_setup()
         ls = {
           -- You can define the java home especially for the JDTLS server here. In this way it doesn't matter what is your JAVA_HOME environmental variable anymore.
           -- Convenient to solve version mismatches for some old projects
-          java = { home = path.runtimes[1].path },
-          vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms256m",
+          -- java = { home = path.runtimes[1].path },
+          vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx10G -Xms256m",
         },
       },
       server = {
@@ -282,7 +307,8 @@ local function jdtls_setup()
       format = {
         enabled = true,
         settings = {
-          profile = vim.fn.stdpath("config") .. "/format-styles/eclipse-java-format.xml",
+          -- profile = vim.fn.stdpath("config") .. "/format-styles/eclipse-java-format.xml",
+          profile = root_dir .. "/logistica/eclipseCodeStyle.xml",
         },
       },
     },
@@ -331,7 +357,7 @@ local function jdtls_setup()
     settings = settings,
     on_attach = jdtls_on_attach,
     capabilities = capabilities,
-    root_dir = project_root_dir,
+    root_dir = root_dir,
     flags = {
       allow_incremental_sync = true,
     },

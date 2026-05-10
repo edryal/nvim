@@ -18,6 +18,7 @@ local options = {
   backup = false, -- creates a backup file
   clipboard = "unnamedplus", -- allows neovim to access the system clipboard
   completeopt = { "menuone", "noselect" }, -- mostly just for cmp
+  laststatus = 3, -- used by which-line for a nicer status line
   fileencoding = "utf-8", -- the encoding written to a file
   hlsearch = true, -- highlight all matches on previous search pattern
   ignorecase = true, -- ignore case in search patterns
@@ -110,7 +111,7 @@ vim.opt.shortmess:append("sI")
 
 -- Disable lsp logs to save resources on huge logs
 -- Enable if you need to debug something
-vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
+vim.lsp.set_log_level(vim.lsp.log_levels.ERROR)
 
 -- Disable default provider integrations
 vim.g["loaded_node_provider"] = 0

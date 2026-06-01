@@ -1,116 +1,91 @@
-return {
-  "ibhagwan/fzf-lua",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  event = "VimEnter",
-  config = function()
-    local map = vim.api.nvim_set_keymap
-    local set = vim.keymap.set
+require("fzf-lua").setup({
+	winopts = {
+		backdrop = 80,
+		preview = {
+			scrollbar = "float",
+		},
+	},
+	keymap = {
+		builtin = {
+			["ctrl-n"] = "down",
+			["ctrl-p"] = "up",
+		},
+		fzf = {
+			["home"] = "first",
+			["end"] = "last",
+			["ctrl-z"] = "abort",
+			["ctrl-d"] = "half-page-down",
+			["ctrl-u"] = "half-page-up",
+			["ctrl-a"] = "beginning-of-line",
+			["ctrl-e"] = "end-of-line",
+			["ctrl-q"] = "select-all+accept",
+		},
+	},
+	fzf_colors = true,
+	defaults = {
+		formatter = { "path.filename_first" },
+	},
+})
 
-    require("fzf-lua").setup({
-      winopts = {
-        backdrop = 80,
-        preview = {
-          scrollbar = "float",
-        },
-      },
-      fzf_colors = true,
-      keymap = {
-        builtin = {
-          ["<a-f>"] = "toggle-fullscreen",
-          ["<a-p>"] = "toggle-preview",
-          ["<a-d>"] = "preview-page-down",
-          ["<a-u>"] = "preview-page-up",
-          ["<a-r>"] = "preview-page-reset",
-          ["<a-w>"] = "toggle-preview-wrap",
-        },
-        fzf = {
-          ["home"] = "first",
-          ["end"] = "last",
-          ["ctrl-z"] = "abort",
-          ["ctrl-d"] = "half-page-down",
-          ["ctrl-u"] = "half-page-up",
-          ["ctrl-a"] = "beginning-of-line",
-          ["ctrl-e"] = "end-of-line",
-          ["ctrl-q"] = "select-all+accept",
-        },
-      },
-      defaults = {
-        formatter = { "path.filename_first" },
-      },
-    })
+-- Register fzf-lua as the backend for ui.select
+require("fzf-lua").register_ui_select()
+vim.keymap.set("n", "<leader>,", "<cmd>FzfLua buffers<cr>", { desc = "Open Buffers", silent = true })
 
-    -- Register fzf-lua as the backend for ui.select
-    require("fzf-lua").register_ui_select()
-    map("n", "<leader>,", ":FzfLua buffers<cr>", Expand_Opts("Open Buffers"))
+-- Find
+vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "Files", silent = true })
+vim.keymap.set("n", "<leader>fq", "<cmd>FzfLua quickfix<cr>", { desc = "Quickfix List", silent = true })
+vim.keymap.set("n", "<leader>fl", "<cmd>FzfLua files resume=true<cr>", { desc = "Last Files", silent = true })
+vim.keymap.set(
+	"n",
+	"<leader>fw",
+	"<cmd>FzfLua lsp_live_workspace_symbols<cr>",
+	{ desc = "Workspace Symbols", silent = true }
+)
 
-    -- Find
-    map("n", "<leader>ff", ":FzfLua files<cr>", Expand_Opts("Files"))
-    map("n", "<leader>fq", ":FzfLua quickfix<cr>", Expand_Opts("Quickfix List"))
-    map("n", "<leader>fl", ":FzfLua files resume=true<cr>", Expand_Opts("Last Files"))
-    map("n", "<leader>fw", ":FzfLua lsp_live_workspace_symbols<cr>", Expand_Opts("Workspace Symbols"))
+local function config_files()
+	return FzfLua.files({ cwd = vim.fn.stdpath("config") })
+end
+vim.keymap.set("n", "<leader>fc", config_files, { desc = "Config Files", silent = true })
 
-    local function config_files()
-      return FzfLua.files({ cwd = vim.fn.stdpath("config") })
-    end
-    set("n", "<leader>fc", config_files, Expand_Opts("Config Files"))
+local function old_cwd_files()
+	return FzfLua.oldfiles({ cwd = vim.fn.getcwd() })
+end
+vim.keymap.set("n", "<leader>fr", old_cwd_files, { desc = "Recent Files", silent = true })
 
-    local function old_cwd_files()
-      return FzfLua.oldfiles({ cwd = vim.fn.getcwd() })
-    end
-    set("n", "<leader>fr", old_cwd_files, Expand_Opts("Recent Files"))
+-- Search
+vim.keymap.set("n", "<leader>sl", "<cmd>FzfLua live_grep_native<cr>", { desc = "Live Grep", silent = true })
+vim.keymap.set("n", "<leader>sr", "<cmd>FzfLua live_grep resume=true<cr>", { desc = "Resume Live Grep", silent = true })
+vim.keymap.set("n", "<leader>sw", "<cmd>FzfLua grep_cword<cr>", { desc = "Grep Word", silent = true })
+vim.keymap.set("n", "<leader>sb", "<cmd>FzfLua lgrep_curbuf<cr>", { desc = "Live Grep Buffer", silent = true })
+vim.keymap.set("v", "<leader>sw", "<cmd>FzfLua grep_cword<cr>", { desc = "Grep Word", silent = true })
+vim.keymap.set("v", "<leader>ss", "<cmd>FzfLua grep_visual<cr>", { desc = "Grep Selection", silent = true })
 
-    -- Search
-    map("n", "<leader>sl", ":FzfLua live_grep_native<cr>", Expand_Opts("Live Grep"))
-    map("n", "<leader>sr", ":FzfLua live_grep_resume<cr>", Expand_Opts("Resume Live Grep"))
-    map("n", "<leader>sw", ":FzfLua grep_cword<cr>", Expand_Opts("Grep Word"))
-    map("n", "<leader>sb", ":FzfLua lgrep_curbuf<cr>", Expand_Opts("Live Grep Buffer"))
-    map("v", "<leader>sw", ":FzfLua grep_cword<cr>", Expand_Opts("Grep Word"))
-    map("v", "<leader>ss", ":FzfLua grep_visual<cr>", Expand_Opts("Grep Selection"))
+-- Git
+local git_util = require("utils.git-root-helper")
 
-    -- Git
-    local git_repos = {
-      ["logistica"] = vim.fn.expand("~/Projects/c-tower/logistica/"),
-      ["corelogistca"] = vim.fn.expand("~/Projects/c-tower/corelogistica/"),
-    }
+vim.keymap.set("n", "<leader>gb", function()
+	FzfLua.git_branches({ cwd = git_util.get_static_git_root() })
+end, { desc = "Branches", silent = true })
 
-    local function get_static_git_root()
-      local path = vim.fn.expand("%:p")
-      for _, repo_path in pairs(git_repos) do
-        if path:find(repo_path, 1, true) then
-          return repo_path
-        end
-      end
-      return nil
-    end
+vim.keymap.set("n", "<leader>gs", function()
+	FzfLua.git_status({ cwd = git_util.get_static_git_root() })
+end, { desc = "Status", silent = true })
 
-    set("n", "<leader>gb", function()
-      FzfLua.git_branches({ cwd = get_static_git_root() })
-    end, Expand_Opts("Branches"))
+vim.keymap.set("n", "<leader>gS", function()
+	FzfLua.git_stash({ cwd = git_util.get_static_git_root() })
+end, { desc = "Stash", silent = true })
 
-    set("n", "<leader>gs", function()
-      FzfLua.git_status({ cwd = get_static_git_root() })
-    end, Expand_Opts("Status"))
+vim.keymap.set("n", "<leader>gC", function()
+	FzfLua.git_commits({ cwd = git_util.get_static_git_root() })
+end, { desc = "Commits", silent = true })
 
-    set("n", "<leader>gS", function()
-      FzfLua.git_stash({ cwd = get_static_git_root() })
-    end, Expand_Opts("Stash"))
+vim.keymap.set("n", "<leader>fg", function()
+	FzfLua.git_files({ cwd = git_util.get_static_git_root() })
+end, { desc = "Git Files", silent = true })
 
-    set("n", "<leader>gC", function()
-      FzfLua.git_commits({ cwd = get_static_git_root() })
-    end, Expand_Opts("Commits"))
-
-    set("n", "<leader>fg", function()
-      FzfLua.git_files({ cwd = get_static_git_root() })
-    end, Expand_Opts("Git Files"))
-
-    -- Lsp
-    map("n", "gd", ":FzfLua lsp_definitions<cr>", Expand_Opts("Goto Definition"))
-    map("n", "gD", ":FzfLua lsp_declarations<cr>", Expand_Opts("Goto Declaration"))
-    map("n", "gr", ":FzfLua lsp_references<cr>", Expand_Opts("References"))
-    map("n", "gi", ":FzfLua lsp_implementations<cr>", Expand_Opts("Goto Implementation"))
-    map("n", "gd", ":FzfLua lsp_definitions<cr>", Expand_Opts("Goto Definition"))
-
-    -- Misc
-    map("n", "<leader>wc", ":FzfLua colorschemes<cr>", Expand_Opts("Colorschemes"))
-  end,
-}
+-- Lsp
+vim.keymap.set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", { desc = "Goto Definition", silent = true })
+vim.keymap.set("n", "gD", "<cmd>FzfLua lsp_declarations<cr>", { desc = "Goto Declaration", silent = true })
+vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<cr>", { desc = "References", silent = true })
+vim.keymap.set("n", "gi", "<cmd>FzfLua lsp_implementations<cr>", { desc = "Goto Implementation", silent = true })
+vim.keymap.set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", { desc = "Goto Definition", silent = true })

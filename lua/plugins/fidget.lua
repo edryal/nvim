@@ -1,5 +1,9 @@
-return {
-    "j-hui/fidget.nvim",
-    event = "LspAttach",
-    opts = {},
-}
+-- only for nice lsp progress
+require("fidget").setup({
+	notification = {
+		window = {
+			align = "top",
+			avoid = { "NvimTree" },
+		},
+	},
+})

@@ -23,9 +23,9 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",
 	callback = function(args)
 		local buf = args.buf
-		local ft = vim.bo[buf].filetype
+		local filetype = vim.bo[buf].filetype
 
-		local lang = vim.treesitter.language.get_lang(ft)
+		local lang = vim.treesitter.language.get_lang(filetype)
 		if not lang then
 			return
 		end
@@ -36,5 +36,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		end
 
 		pcall(vim.treesitter.start, buf, lang)
+		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 	end,
 })

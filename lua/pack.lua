@@ -27,7 +27,7 @@ vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", branch = "main" },
 
 	-- Pay attention because plugin was archived, remove when it finally breaks
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", branch = "main" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" },
 
 	-- Fixes the annoying E828 error when writing to an undo file
 	-- when you're working in big project with a lot of nested directories

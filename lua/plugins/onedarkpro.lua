@@ -30,6 +30,6 @@ require("onedarkpro").setup({
 	},
 	options = {
 		cursorline = false,
-		trasparency = true,
+		transparency = true,
 	},
 })

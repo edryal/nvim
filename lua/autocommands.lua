@@ -6,13 +6,12 @@ vim.api.nvim_create_autocmd("FileType", {
 		"man",
 		"lspinfo",
 		"notify",
-		"nofile",
 		"toggleterm",
 		"fugitive",
 	},
 	callback = function()
 		vim.cmd([[
-          nnoremap <silent> <buffer> q :close<CR>
+          nnoremap <silent> <buffer> q <cmd>close<cr>
           set nobuflisted
         ]])
 	end,

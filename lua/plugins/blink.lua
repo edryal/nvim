@@ -1,7 +1,10 @@
 require("blink.cmp").build():pwait()
 require("blink.cmp").setup({
 	keymap = { preset = "enter" },
-	completion = { documentation = { auto_show = false } },
+	completion = {
+		documentation = { auto_show = false },
+		keyword = { range = "full" },
+	},
 	signature = {
 		enabled = true,
 		window = {

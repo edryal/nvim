@@ -5,9 +5,9 @@ vim.g.loaded_netrwPlugin = 1
 require("vim._core.ui2").enable({})
 
 require("options")
-require("autocommands")
 require("keymaps")
 require("pack")
+require("autocommands")
 require("lsp")
 
 vim.cmd.colorscheme("onedark")

@@ -36,3 +36,11 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	end,
 	group = disable_useless_diagnostics,
 })
+
+vim.api.nvim_create_autocmd("PackChanged", {
+	callback = function(ev)
+		if ev.data.spec.name == "nvim-treesitter" then
+			vim.cmd("TSUpdate")
+		end
+	end,
+})

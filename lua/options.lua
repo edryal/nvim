@@ -23,6 +23,7 @@ vim.opt.incsearch = true
 
 vim.opt.laststatus = 3
 vim.opt.showtabline = 0
+vim.opt.winborder = "bold"
 
 vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true

@@ -1,6 +1,9 @@
 require("blink.cmp").build():pwait()
 require("blink.cmp").setup({
-	keymap = { preset = "enter" },
+	keymap = {
+		preset = "enter",
+		["<A-Space>"] = { "show", "show_documentation", "hide_documentation" },
+	},
 	completion = {
 		documentation = { auto_show = false },
 		keyword = { range = "full" },
@@ -15,6 +18,7 @@ require("blink.cmp").setup({
 	cmdline = {
 		keymap = {
 			preset = "cmdline",
+            ['<A-space>'] = { 'show', 'fallback' },
 		},
 		completion = {
 			menu = {

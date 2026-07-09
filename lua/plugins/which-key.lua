@@ -7,6 +7,7 @@ require("which-key").setup({
 			{ "<leader>w", group = "Window" },
 			{ "<leader>t", group = "Toggle" },
 			{ "<leader>n", group = "Notifications" },
+			{ "<leader>m", group = "Markdown" },
 			{ "<leader>o", group = "Open" },
 			{ "<leader>b", group = "Buffers" },
 			{ "<leader>r", group = "Reload" },

@@ -34,9 +34,9 @@ vim.pack.add({
 	"https://github.com/pixelastic/vim-undodir-tree",
 
 	"https://github.com/akinsho/toggleterm.nvim",
-	-- "https://github.com/nvim-mini/mini.statusline",
 	"https://github.com/nvim-lualine/lualine.nvim",
 	"https://github.com/j-hui/fidget.nvim",
+	"https://github.com/MeanderingProgrammer/render-markdown.nvim",
 
 	-- order matters
 	"https://github.com/nvim-neotest/nvim-nio",
@@ -45,7 +45,7 @@ vim.pack.add({
 	"https://github.com/mfussenegger/nvim-dap",
 	"https://github.com/leoluz/nvim-dap-go",
 
-	-- Optional (don't need them yet)
+	-- Optional (don't necessarily need them, but they're nice to have sometimes)
 	"https://github.com/hedyhli/outline.nvim",
 	"https://github.com/folke/lazydev.nvim",
 })
@@ -61,7 +61,6 @@ require("plugins.outline")
 require("plugins.lualine")
 require("plugins.nvim-tree")
 require("plugins.blink")
--- require("plugins.mini-statusline")
 require("plugins.mini-pairs")
 require("plugins.endofline-club")
 require("plugins.mason")
@@ -69,6 +68,7 @@ require("plugins.mason-lspconfig")
 require("plugins.mason-tool-installer")
 require("plugins.lsp-file-operations")
 require("plugins.fidget")
+require("plugins.render-markdown")
 require("plugins.fzf-lua")
 require("plugins.snacks")
 require("plugins.toggleterm")

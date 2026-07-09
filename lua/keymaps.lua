@@ -47,3 +47,9 @@ end, { desc = "Next Diagnostic", silent = true })
 vim.keymap.set("n", "gp", function()
 	vim.diagnostic.jump({ count = -1 })
 end, { desc = "Prev Diagnostic", silent = true })
+
+vim.keymap.set("n", "<leader>ts", function()
+	local on = not vim.wo.spell
+	vim.wo.spell = on
+	vim.notify("Spellcheck: " .. (on and "ON" or "OFF"))
+end, { desc = "Spellcheck", silent = true })

@@ -34,7 +34,10 @@ vim.keymap.set("n", "L", "<cmd>lua vim.lsp.buf.signature_help()<cr>", { desc = "
 vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", { desc = "Show Hover information", silent = true })
 vim.keymap.set("n", "gR", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "Rename all references", silent = true })
 vim.keymap.set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Floating Diagnostics", silent = true })
-vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "Code Action", silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", {
+	desc = "Code Action",
+	silent = true,
+})
 
 vim.keymap.set({ "n", "v" }, "<leader>cf", function()
 	vim.lsp.buf.format({ async = true })

@@ -36,7 +36,7 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/Documents/neovim/undodir"
 vim.opt.undofile = true
 
-vim.opt.spell = true
+vim.opt.spell = false
 vim.opt.spelllang = "en_us"
 
 vim.opt.clipboard:append("unnamedplus")

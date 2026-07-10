@@ -7,7 +7,6 @@ vim.pack.add({
 	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
-	"https://github.com/mason-org/mason-lspconfig.nvim",
 	"https://github.com/antosha417/nvim-lsp-file-operations",
 	"https://github.com/olimorris/onedarkpro.nvim",
 	"https://github.com/ojroques/nvim-bufdel",
@@ -18,6 +17,7 @@ vim.pack.add({
 	"https://github.com/numToStr/Comment.nvim",
 	"https://github.com/rpollard00/endofline-club.nvim",
 	"https://github.com/mfussenegger/nvim-jdtls",
+	"https://github.com/JavaHello/spring-boot.nvim",
 	"https://github.com/nvim-tree/nvim-tree.lua",
 	"https://github.com/ibhagwan/fzf-lua",
 	"https://github.com/folke/snacks.nvim",
@@ -64,7 +64,6 @@ require("plugins.blink")
 require("plugins.mini-pairs")
 require("plugins.endofline-club")
 require("plugins.mason")
-require("plugins.mason-lspconfig")
 require("plugins.mason-tool-installer")
 require("plugins.lsp-file-operations")
 require("plugins.fidget")
@@ -72,6 +71,7 @@ require("plugins.render-markdown")
 require("plugins.fzf-lua")
 require("plugins.snacks")
 require("plugins.toggleterm")
+require("plugins.spring-boot")
 
 -- dap
 require("plugins.dap")

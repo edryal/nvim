@@ -99,16 +99,16 @@ local function sync_java_identifier_name()
 	end
 end
 
-vim.keymap.set("n", "<leader>jgc", function()
+vim.keymap.set("n", "<leader>jbc", function()
 	generate_java_boilerplate("class")
-end, { desc = "Generate Class" })
+end, { desc = "New Class" })
 
-vim.keymap.set("n", "<leader>jge", function()
+vim.keymap.set("n", "<leader>jbe", function()
 	generate_java_boilerplate("enum")
-end, { desc = "Generate Enum" })
+end, { desc = "New Enum" })
 
-vim.keymap.set("n", "<leader>jgi", function()
+vim.keymap.set("n", "<leader>jbi", function()
 	generate_java_boilerplate("interface")
-end, { desc = "Generate Interface" })
+end, { desc = "New Interface" })
 
-vim.keymap.set("n", "<leader>jgn", sync_java_identifier_name, { desc = "Sync Name to Filename" })
+vim.keymap.set("n", "<leader>jbs", sync_java_identifier_name, { desc = "Sync Name to Filename" })

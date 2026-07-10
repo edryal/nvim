@@ -4,7 +4,6 @@ end
 
 local root_markers = {
 	-- ".git",
-	-- ".jdtls-root",
 
 	-- "logistica.iml",
 	-- "logistica.eml",
@@ -82,13 +81,12 @@ local function get_jdtls_paths()
 	---
 	-- Include springboot bundle if present, needs HelloJava's plugin
 	---
-	-- vim.list_extend(path.bundles, require("spring_boot").java_extensions())
+	vim.list_extend(path.bundles, require("spring_boot").java_extensions())
 
 	---
 	-- Useful if you're starting jdtls with a Java version that's
 	-- different from the one the project uses.
 	---
-
 	path.runtimes = {
 		{
 			name = "JavaSE-21",
@@ -144,24 +142,16 @@ local function jdtls_on_attach(client, bufnr)
 	end, { desc = "Refresh Project" })
 
 	-- Refactoring
-	vim.keymap.set("n", "<leader>jev", function()
-		jdtls.extract_variable()
-	end, { desc = "Extract Variable" })
+	vim.keymap.set({ "n", "v" }, "<leader>je", function()
+		jdtls.extract_variable_all()
+	end, { desc = "Extract Choices", buffer = bufnr })
 
-	vim.keymap.set("n", "<leader>jec", function()
-		jdtls.extract_constant()
-	end, { desc = "Extract Constant" })
-
-	vim.keymap.set("v", "<leader>jev", function()
-		jdtls.extract_variable(true)
-	end, { desc = "Extract Variable" })
-
-	vim.keymap.set("v", "<leader>jem", function()
-		jdtls.extract_method(true)
-	end, { desc = "Extract Method" })
+	vim.keymap.set("n", "<leader>jg", function()
+		vim.lsp.buf.code_action({ context = { only = { "source.generate" } } })
+	end, { desc = "Generate Menu", buffer = bufnr })
 
 	-- Commands
-	vim.keymap.set("n", "<leader>jr", "<cmd>JdtSetRuntime<cr>", { desc = "Set Java Runtime" })
+	vim.keymap.set("n", "<leader>jR", "<cmd>JdtSetRuntime<cr>", { desc = "Set Java Runtime" })
 	vim.keymap.set("n", "<leader>jc", "<cmd>JdtCompile full<cr>", { desc = "Compile Project" })
 
 	-- Testing

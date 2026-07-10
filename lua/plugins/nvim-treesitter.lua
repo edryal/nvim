@@ -14,7 +14,11 @@ local ensure_installed = {
 	"bash",
 	"http",
 	"dockerfile",
-    "groovy"
+    "groovy",
+    "xml",
+    "yaml",
+    "markdown",
+    "kotlin"
 }
 
 treesitter.install(ensure_installed)

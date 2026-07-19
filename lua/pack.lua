@@ -10,7 +10,6 @@ local plugin_urls = {
     "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/antosha417/nvim-lsp-file-operations",
-    "https://github.com/olimorris/onedarkpro.nvim",
     "https://github.com/ojroques/nvim-bufdel",
     "https://github.com/tpope/vim-fugitive",
     "https://github.com/lewis6991/gitsigns.nvim",
@@ -36,6 +35,14 @@ local plugin_urls = {
     -- optional
     "https://github.com/hedyhli/outline.nvim",
     "https://github.com/folke/lazydev.nvim",
+    -- colorschemes
+    "https://github.com/olimorris/onedarkpro.nvim",
+    "https://github.com/nyoom-engineering/oxocarbon.nvim",
+    "https://github.com/rebelot/kanagawa.nvim",
+    "https://github.com/vague-theme/vague.nvim",
+    "https://github.com/ellisonleao/gruvbox.nvim",
+    { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
+    { src = "https://github.com/catppuccin/nvim",  name = "catppuccin" }
 }
 
 if features.markdown and features.markdown.enabled then
@@ -61,6 +68,11 @@ vim.pack.add(plugin_urls)
 
 -- plugins that require configuration and setup
 require("plugins.onedarkpro")
+require("plugins.kanagawa")
+require("plugins.vague")
+require("plugins.rose-pine")
+require("plugins.catppuccin")
+require("plugins.gruvbox")
 require("plugins.vim-fugitive")
 require("plugins.gitsigns")
 require("plugins.which-key")

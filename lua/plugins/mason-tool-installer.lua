@@ -30,6 +30,7 @@ local go_tools = {
 local cpp_tools = {
     "clangd",
     "clang-format",
+    "neocmakelsp"
 }
 
 if features.java and features.java.enabled then

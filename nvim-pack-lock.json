@@ -12,6 +12,10 @@
       "rev": "5876dd95deeb70aadbe9f1c0b7117a135061cdac",
       "src": "https://github.com/saghen/blink.lib"
     },
+    "catppuccin": {
+      "rev": "05e8787020dcfdb937bf2ff23855ea2415b4e072",
+      "src": "https://github.com/catppuccin/nvim"
+    },
     "cord.nvim": {
       "rev": "b08b9245d2973eda91437d2de5c8746b9f510d31",
       "src": "https://github.com/vyfor/cord.nvim"
@@ -31,6 +35,14 @@
     "gitsigns.nvim": {
       "rev": "eb60cc7b94c46005237fd34170d76f3a089a90aa",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "gruvbox.nvim": {
+      "rev": "154eb5ff5b96d0641307113fa385eaf0d36d9796",
+      "src": "https://github.com/ellisonleao/gruvbox.nvim"
+    },
+    "kanagawa.nvim": {
+      "rev": "bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3",
+      "src": "https://github.com/rebelot/kanagawa.nvim"
     },
     "lazydev.nvim": {
       "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
@@ -108,6 +120,10 @@
       "rev": "2a132953b944561d45b52e4541ebfff71934a742",
       "src": "https://github.com/hedyhli/outline.nvim"
     },
+    "oxocarbon.nvim": {
+      "rev": "cf49e389c22dab56224e43ae16422ddcd5b61b28",
+      "src": "https://github.com/nyoom-engineering/oxocarbon.nvim"
+    },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
@@ -115,6 +131,10 @@
     "render-markdown.nvim": {
       "rev": "f422cb5c6855f150e2ddcfaf44e7157b98b34f6a",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
+    "rose-pine": {
+      "rev": "ff483051a47e27d84bdef47703538df1ed9f4a47",
+      "src": "https://github.com/rose-pine/neovim"
     },
     "snacks.nvim": {
       "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
@@ -127,6 +147,10 @@
     "toggleterm.nvim": {
       "rev": "9a88eae817ef395952e08650b3283726786fb5fb",
       "src": "https://github.com/akinsho/toggleterm.nvim"
+    },
+    "vague.nvim": {
+      "rev": "161384e625e7b6cca118a3fa66225ba5cacdfb50",
+      "src": "https://github.com/vague-theme/vague.nvim"
     },
     "vim-fugitive": {
       "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",

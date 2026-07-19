@@ -15,6 +15,7 @@ require("which-key").setup({
 
 			-- Java
 			{ "<leader>jt", group = "Test" },
+			{ "<leader>jd", group = "Debug" },
 			{ "<leader>jb", group = "Boilerplate" },
 			{ "<leader>jj", group = "Jacoco" },
 		},

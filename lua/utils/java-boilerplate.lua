@@ -1,7 +1,9 @@
+local M = {}
+
 -- Generate Java boilerplate for classes, enums, and interfaces.
 -- It preserves the 'package' line, clears everything else, and inserts the
 -- correct boilerplate based on the filename.
-local function generate_java_boilerplate(type)
+function M.generate_java_boilerplate(type)
 	local name = vim.fn.expand("%:t:r")
 	if name == "" then
 		vim.notify("Buffer has no filename, defaulting to 'FILENAME'", vim.log.levels.WARN)
@@ -65,7 +67,7 @@ end
 -- Sync Java Identifier Name
 -- Finds the public class, enum, or interface and updates its name
 -- to match the current filename.
-local function sync_java_identifier_name()
+function M.sync_java_identifier_name()
 	-- Get name from the filename
 	local expected_name = vim.fn.expand("%:t:r")
 	if expected_name == "" then
@@ -99,16 +101,4 @@ local function sync_java_identifier_name()
 	end
 end
 
-vim.keymap.set("n", "<leader>jbc", function()
-	generate_java_boilerplate("class")
-end, { desc = "New Class" })
-
-vim.keymap.set("n", "<leader>jbe", function()
-	generate_java_boilerplate("enum")
-end, { desc = "New Enum" })
-
-vim.keymap.set("n", "<leader>jbi", function()
-	generate_java_boilerplate("interface")
-end, { desc = "New Interface" })
-
-vim.keymap.set("n", "<leader>jbs", sync_java_identifier_name, { desc = "Sync Name to Filename" })
+return M

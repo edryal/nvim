@@ -109,4 +109,31 @@ M.setup_java_debugger = function()
     })
 end
 
+M.setup_cpp_debugger = function()
+    local dap = require("dap")
+    dap.adapters.gdb = {
+        type = "executable",
+        command = "gdb",
+        args = {
+            "--interpreter=dap",
+            "--eval-command", "set print pretty on",
+        },
+    }
+
+    dap.configurations.cpp = {
+        {
+            name = "Launch (build/main)",
+            type = "gdb",
+            request = "launch",
+            program = function()
+                return vim.fn.getcwd() .. "/build/main"
+            end,
+            cwd = "${workspaceFolder}",
+            stopAtBeginningOfMainSubprogram = false,
+        },
+    }
+
+    dap.configurations.c = dap.configurations.cpp
+end
+
 return M

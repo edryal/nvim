@@ -26,3 +26,7 @@ end
 if features.go and features.go.enabled then
     util.setup_go_debugger()
 end
+
+if features.cpp and features.cpp.enabled then
+    util.setup_cpp_debugger()
+end

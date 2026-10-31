@@ -8,14 +8,12 @@ local plugin_urls = {
     -- actual plugins
     "https://github.com/mason-org/mason.nvim",
     "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
-    "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/antosha417/nvim-lsp-file-operations",
     "https://github.com/ojroques/nvim-bufdel",
     "https://github.com/tpope/vim-fugitive",
     "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/folke/which-key.nvim",
     "https://github.com/nvim-mini/mini.pairs",
-    "https://github.com/numToStr/Comment.nvim",
     "https://github.com/rpollard00/endofline-club.nvim",
     "https://github.com/nvim-tree/nvim-tree.lua",
     "https://github.com/ibhagwan/fzf-lua",
@@ -77,9 +75,9 @@ require("plugins.gruvbox")
 require("plugins.vim-fugitive")
 require("plugins.gitsigns")
 require("plugins.which-key")
-require("plugins.comment")
 require("plugins.nvim-treesitter")
 require("plugins.outline")
+require("plugins.lazydev")
 require("plugins.lualine")
 require("plugins.nvim-tree")
 require("plugins.blink")

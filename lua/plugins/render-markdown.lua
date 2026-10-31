@@ -2,6 +2,7 @@ require("render-markdown").setup({
     enabled = true,
     completions = { lsp = { enabled = true } },
     file_types = { "markdown", "vimwiki" },
+    latex = { enabled = false }
 })
 
 vim.api.nvim_create_autocmd("FileType", {

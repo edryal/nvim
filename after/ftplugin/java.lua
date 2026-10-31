@@ -4,10 +4,6 @@ end
 
 local root_markers = {
     -- ".git",
-
-    -- "logistica.iml",
-    -- "logistica.eml",
-
     "mvnw",
     "gradlew",
     "pom.xml",
@@ -15,10 +11,7 @@ local root_markers = {
 }
 
 local jdtls = require("jdtls")
-
 local root_dir = vim.fs.root(0, root_markers)
--- local root_dir = "/home/catalin/Projects/java_ee_serv"
-
 local cache_vars = {}
 
 local function get_jdtls_paths()
@@ -185,8 +178,6 @@ local function jdtls_setup()
     end
 
     local workspace_dir = path.workspace_dir .. "/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-    -- local workspace_dir = path.workspace_dir .. "/c-tower"
-    -- "/home/catalin/Projects/c-tower"
 
     -- LSP capabilities to override
     local capabilities = {

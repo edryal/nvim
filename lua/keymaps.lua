@@ -1,6 +1,12 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Remove neovim's default lsp gr* mappings (:h lsp-defaults-disable)
+for _, lhs in ipairs({ "grn", "gra", "grr", "gri", "grt", "grx" }) do
+    pcall(vim.keymap.del, "n", lhs)
+end
+pcall(vim.keymap.del, "x", "gra")
+
 -- easier wrapped text navigation
 vim.keymap.set("n", "j", function() return vim.v.count == 0 and "gj" or "j" end,
     { desc = "Down (in wrapped text)", expr = true, silent = true })
@@ -36,6 +42,7 @@ vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<c
 
 vim.keymap.set({ "n", "v" }, "<leader>cf", function() vim.lsp.buf.format({ async = true }) end,
     { desc = "Code Format", silent = true })
+vim.keymap.set("n", "<leader>cl", function() vim.lsp.codelens.run() end, { desc = "Run Codelens", silent = true })
 
 vim.keymap.set("n", "gn", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Next Diagnostic", silent = true })
 vim.keymap.set("n", "gp", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Prev Diagnostic", silent = true })

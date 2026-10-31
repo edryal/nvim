@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "Comment.nvim": {
-      "rev": "e30b7f2008e52442154b66f7c519bfd2f1e32acb",
-      "src": "https://github.com/numToStr/Comment.nvim"
-    },
     "blink.cmp": {
       "rev": "d4318ec75309a37e09757de0f16faa67bf22b890",
       "src": "https://github.com/saghen/blink.cmp"
@@ -44,10 +40,6 @@
       "rev": "365e2ace0f619164ae6fd2f6f1d2807775dd6849",
       "src": "https://github.com/3rd/image.nvim"
     },
-    "image_preview.nvim": {
-      "rev": "d015f9c707916735768d19b8659fc6d33bdccf92",
-      "src": "https://github.com/adelarsq/image_preview.nvim"
-    },
     "kanagawa.nvim": {
       "rev": "bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3",
       "src": "https://github.com/rebelot/kanagawa.nvim"
@@ -71,10 +63,6 @@
     "mini.pairs": {
       "rev": "03eb1f0062a2cee5314d1ac3939246e4bb21352e",
       "src": "https://github.com/nvim-mini/mini.pairs"
-    },
-    "neo-img": {
-      "rev": "065fa672929696c4f3478ff2fbdb886b5d2d434e",
-      "src": "https://github.com/Skardyy/neo-img"
     },
     "nvim-bufdel": {
       "rev": "523d58e94e7212fff3e05c247b962dc8f93bcfde",
@@ -103,10 +91,6 @@
     "nvim-lsp-file-operations": {
       "rev": "3d40a10419acfb2778d58a62ccb083d256114232",
       "src": "https://github.com/antosha417/nvim-lsp-file-operations"
-    },
-    "nvim-lspconfig": {
-      "rev": "d8d2fda7aae57030452ce8cd6e770b1eb704514e",
-      "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-nio": {
       "rev": "edcc181a875301dd21840189aa2f2f9ad69fc172",

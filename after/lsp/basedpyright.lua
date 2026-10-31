@@ -1,4 +1,12 @@
-local capabilities = require("utils.lsp-setup").setup_capabilities()
+local function set_python_path(command)
+    local clients = vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf(), name = "basedpyright" })
+    for _, client in ipairs(clients) do
+        client.settings = vim.tbl_deep_extend("force", client.settings or {}, {
+            python = { pythonPath = command.args },
+        })
+        client:notify("workspace/didChangeConfiguration", { settings = nil })
+    end
+end
 
 return {
     cmd = { "basedpyright-langserver", "--stdio" },
@@ -11,17 +19,29 @@ return {
         "requirements.txt",
         "Pipfile",
         ".git",
-        "__builtins__.py",
     },
-    capabilities = capabilities,
     settings = {
         basedpyright = {
+            disableTaggedHints = true,
             analysis = {
-                typeCheckingMode = "basic",
+                typeCheckingMode = "recommended",
                 autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
                 diagnosticMode = "openFilesOnly",
             },
         },
     },
+    on_attach = function(client, bufnr)
+        vim.api.nvim_buf_create_user_command(bufnr, "LspPyrightOrganizeImports", function()
+            client:request("workspace/executeCommand", {
+                command = "basedpyright.organizeimports",
+                arguments = { vim.uri_from_bufnr(bufnr) },
+            }, nil, bufnr)
+        end, { desc = "Organize Imports" })
+
+        vim.api.nvim_buf_create_user_command(bufnr, "LspPyrightSetPythonPath", set_python_path, {
+            desc = "Reconfigure basedpyright with the given python path",
+            nargs = 1,
+            complete = "file",
+        })
+    end,
 }

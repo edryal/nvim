@@ -6,16 +6,22 @@ return {
         enabled = true,
         springboot = true
     },
+    go = {
+        enabled = true
+    },
     cpp = {
         enabled = true
     },
-    discord_presence = {
+    typescript = {
+        enabled = true
+    },
+    python = {
         enabled = true
     },
     markdown = {
         enabled = true
     },
-    python = {
+    discord_presence = {
         enabled = true
     }
 }

@@ -15,5 +15,15 @@ if features.python and features.python.enabled then
     table.insert(lsps, "basedpyright")
 end
 
+if features.typescript and features.typescript.enabled then
+    table.insert(lsps, "vtsls")
+end
+
+-- blink adds completion capabilities by default
+-- so we can just add lsp-file-operations capabilities on top
+vim.lsp.config("*", {
+    capabilities = require("lsp-file-operations").default_capabilities(),
+})
+
 vim.lsp.enable(lsps)
 vim.lsp.codelens.enable(true)

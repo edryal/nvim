@@ -37,6 +37,10 @@ local python_tools = {
     "basedpyright"
 }
 
+local typescript_tools = {
+    "vtsls"
+}
+
 if features.java and features.java.enabled then
     vim.list_extend(tools, java_tools)
     if features.java.springboot then
@@ -54,6 +58,10 @@ end
 
 if features.python and features.python.enabled then
     vim.list_extend(tools, python_tools)
+end
+
+if features.typescript and features.typescript.enabled then
+    vim.list_extend(tools, typescript_tools)
 end
 
 require("mason-tool-installer").setup({ ensure_installed = tools })

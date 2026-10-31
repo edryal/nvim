@@ -1,9 +1,5 @@
-local capabilities = require("utils.lsp-setup").setup_capabilities()
-
 return {
     cmd = { "lemminx" },
-    filetypes = { "xml", "xsd", "xsl", "xslt", "svg" },
+    filetypes = { "xml", "xsd", "xslt", "svg" },
     root_markers = { ".git", "pom.xml" },
-    capabilities = capabilities,
-    single_file_support = true,
 }

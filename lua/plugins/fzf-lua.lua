@@ -72,3 +72,4 @@ vim.keymap.set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", { desc = "Goto Defi
 vim.keymap.set("n", "gD", "<cmd>FzfLua lsp_declarations<cr>", { desc = "Goto Declaration", silent = true })
 vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<cr>", { desc = "References", silent = true })
 vim.keymap.set("n", "gi", "<cmd>FzfLua lsp_implementations<cr>", { desc = "Goto Implementation", silent = true })
+vim.keymap.set("n", "gT", "<cmd>FzfLua lsp_typedefs<cr>", { desc = "Goto Type Definition", silent = true })

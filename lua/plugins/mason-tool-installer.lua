@@ -48,6 +48,12 @@ local web_tools = {
     "biome",
 }
 
+local devops_tools = {
+    "dockerfile-language-server",
+    "docker-compose-language-service",
+    "yaml-language-server",
+}
+
 if features.java and features.java.enabled then
     vim.list_extend(tools, java_tools)
     if features.java.springboot then
@@ -73,6 +79,10 @@ end
 
 if features.web and features.web.enabled then
     vim.list_extend(tools, web_tools)
+end
+
+if features.devops and features.devops.enabled then
+    vim.list_extend(tools, devops_tools)
 end
 
 require("mason-tool-installer").setup({ ensure_installed = tools })

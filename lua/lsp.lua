@@ -23,6 +23,20 @@ if features.rust and features.rust.enabled then
     table.insert(lsps, "taplo")
 end
 
+if features.devops and features.devops.enabled then
+    vim.list_extend(lsps, { "dockerls", "compose_ls", "yamlls" })
+
+    -- the compose server needs its own filetype
+    vim.filetype.add({
+        filename = {
+            ["docker-compose.yml"] = "yaml.docker-compose",
+            ["docker-compose.yaml"] = "yaml.docker-compose",
+            ["compose.yml"] = "yaml.docker-compose",
+            ["compose.yaml"] = "yaml.docker-compose",
+        },
+    })
+end
+
 -- blink adds completion capabilities by default, add lsp-file-operations on top
 vim.lsp.config("*", {
     capabilities = require("lsp-file-operations").default_capabilities(),

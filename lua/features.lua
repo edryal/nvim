@@ -24,6 +24,9 @@ return {
     markdown = {
         enabled = true
     },
+    devops = {
+        enabled = true
+    },
     discord_presence = {
         enabled = true
     }

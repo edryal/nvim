@@ -2,31 +2,48 @@ local M = {}
 
 M.create_debug_config = function()
     return {
-        controls = { enabled = true },
+        controls = { enabled = false },
         layouts = {
             {
+                -- opens when paused at a breakpoint
                 elements = { "scopes", "breakpoints", "stacks" },
                 size = 0.3,
                 position = "left",
             },
             {
-                elements = { "repl", "console" },
-                size = 0.3,
+                -- program / test output
+                elements = { "repl" },
+                size = 0.5,
                 position = "bottom",
             },
-        }
+        },
     }
 end
 
 M.setup_dap_listeners = function(dap, dapui)
-    dap.listeners.after.event_initialized.dapui_config = function()
-        dapui.open()
+    -- every session starts with an empty REPL, so it only shows this run's output
+    dap.listeners.on_config.dapui_config = function(config)
+        dap.repl.clear()
+        return config
     end
-    dap.listeners.before.event_terminated.dapui_config = function()
-        dapui.close()
+    dap.listeners.before.attach.dapui_config = function() dapui.open({ layout = 2 }) end
+    dap.listeners.before.launch.dapui_config = function() dapui.open({ layout = 2 }) end
+    dap.listeners.after.event_stopped.dapui_config = function() dapui.open({ layout = 1 }) end
+end
+
+-- <leader>dd: close everything if anything is open, otherwise reopen the output (+ side panel when paused)
+M.toggle_ui = function()
+    local dap, dapui = require("dap"), require("dapui")
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local ft = vim.bo[vim.api.nvim_win_get_buf(win)].filetype
+        if ft:match("^dapui_") or ft == "dap-repl" then
+            return dapui.close()
+        end
     end
-    dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
+    dapui.open({ layout = 2 })
+    local session = dap.session()
+    if session and session.stopped_thread_id then
+        dapui.open({ layout = 1 })
     end
 end
 
@@ -72,6 +89,7 @@ end
 
 M.setup_dap_keymaps = function()
     local dap = require("dap")
+
     vim.keymap.set("n", "<leader>ds", dap.continue, { desc = "Start/Continue" })
     vim.keymap.set("n", "<leader>dt", dap.terminate, { desc = "Terminate Session" })
     vim.keymap.set("n", "<leader>da", dap.toggle_breakpoint, { desc = "Add Breakpoint" })
@@ -79,7 +97,7 @@ M.setup_dap_keymaps = function()
     vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "Step Over" })
     vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Step Into" })
     vim.keymap.set("n", "<leader>du", dap.step_out, { desc = "Step Out" })
-    vim.keymap.set("n", "<leader>dd", "<cmd>lua require'dapui'.toggle()<cr>", { desc = "Dap UI" })
+    vim.keymap.set("n", "<leader>dd", M.toggle_ui, { desc = "Dap UI" })
     vim.keymap.set("n", "<leader>tv", "<cmd>DapVirtualTextToggle<cr>", { desc = "Dap Virtual Text" })
 
     vim.api.nvim_create_autocmd("FileType", {

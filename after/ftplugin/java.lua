@@ -12,13 +12,8 @@ local root_markers = {
 
 local jdtls = require("jdtls")
 local root_dir = vim.fs.root(0, root_markers)
-local cache_vars = {}
 
 local function get_jdtls_paths()
-    if cache_vars.paths then
-        return cache_vars.paths
-    end
-
     local mason_packages = vim.fn.stdpath("data") .. "/mason/packages"
     local jdtls_install = mason_packages .. "/jdtls"
 
@@ -51,25 +46,25 @@ local function get_jdtls_paths()
     -- Include java-debug-adapter bundle if present
     ---
     local java_debug_path = mason_packages .. "/java-debug-adapter"
-    local java_debug_jar =
-        vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar", true)
+    local java_debug_jars = vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar",
+        true, true)
 
-    if java_debug_jar ~= "" then
-        table.insert(path.bundles, java_debug_jar)
+    if java_debug_jars[1] then
+        table.insert(path.bundles, java_debug_jars[1])
     end
 
     ---
     -- Include java-test bundle if present
     ---
     local java_test_path = mason_packages .. "/java-test/extension/server"
-    local java_test_bundles = vim.split(vim.fn.glob(java_test_path .. "/*.jar", 1), "\n")
+    local java_test_bundles = vim.fn.glob(java_test_path .. "/*.jar", true, true)
     local excluded = {
         "com.microsoft.java.test.runner-jar-with-dependencies.jar",
         "jacocoagent.jar",
     }
+
     for _, jar in ipairs(java_test_bundles) do
-        local fname = vim.fn.fnamemodify(jar, ":t")
-        if jar ~= "" and not vim.tbl_contains(excluded, fname) then
+        if not vim.tbl_contains(excluded, vim.fn.fnamemodify(jar, ":t")) then
             table.insert(path.bundles, jar)
         end
     end
@@ -86,63 +81,52 @@ local function get_jdtls_paths()
     -- Useful if you're starting jdtls with a Java version that's
     -- different from the one the project uses.
     ---
-    path.runtimes = {
-        {
-            name = "JavaSE-21",
-            path = home .. "/.sdkman/candidates/java/21.0.7-tem",
-        },
-        -- {
-        --   name = "JavaSE-17",
-        --   path = home .. "/.sdkman/candidates/java/17.0.16-tem",
-        -- },
-        -- {
-        --   name = "JavaSE-1.8",
-        --   path = home .. "/.sdkman/candidates/java/8.0.462-tem",
-        --   default = true,
-        -- },
-        -- {
-        --   name = "JavaSE-1.8",
-        --   path = home .. "/Documents/jdk1.8.0_202",
-        --   default = true,
-        -- },
+    local jdks = {
+        { name = "JavaSE-25", path = home .. "/.sdkman/candidates/java/25.*-tem", default = true },
+        -- { name = "JavaSE-21", path = home .. "/.sdkman/candidates/java/21.*-tem" },
+        -- { name = "JavaSE-17", path = home .. "/.sdkman/candidates/java/17.*-tem" },
+        -- { name = "JavaSE-11", path = home .. "/.sdkman/candidates/java/11.*-tem" },
+        -- { name = "JavaSE-1.8", path = home .. "/.sdkman/candidates/java/8.*-tem" },
     }
 
-    cache_vars.paths = path
+    path.runtimes = {}
+    local added = {}
+
+    for _, jdk in ipairs(jdks) do
+        local found = vim.fn.glob(jdk.path, true, true)[1]
+        if found and not added[jdk.name] then
+            added[jdk.name] = true
+            table.insert(path.runtimes, { name = jdk.name, path = found, default = jdk.default })
+        end
+    end
 
     return path
 end
 
-local function enable_debugger(bufnr)
-    jdtls.setup_dap()
-    require("jdtls.dap").setup_dap_main_class_configs()
-end
-
-local function jdtls_on_attach(client, bufnr)
-    enable_debugger(bufnr)
-
+local function jdtls_on_attach(_, bufnr)
     local test_opts = {
-        config = {
-            console = "internalConsole",
-        },
-        -- INFO: check this if working with JUnit 4
-        junit = {
-            useJUnitPlatform = true,
-        },
         config_overrides = {
+            console = "internalConsole",
             shortenCommandLine = "argfile",
         },
     }
 
     vim.keymap.set("n", "<leader>jo", function() jdtls.organize_imports() end,
         { desc = "Organize Imports", buffer = bufnr })
-    vim.keymap.set("n", "<leader>ju", function() jdtls.update_project_config() end,
-        { desc = "Refresh Project", buffer = bufnr })
+
+    vim.keymap.set("n", "<leader>ju", function() jdtls.update_projects_config() end,
+        { desc = "Refresh Projects", buffer = bufnr })
 
     -- Refactoring
-    vim.keymap.set({ "n", "v" }, "<leader>je", function() jdtls.extract_variable_all() end,
-        { desc = "Extract Choices", buffer = bufnr })
+    vim.keymap.set("n", "<leader>je", function() jdtls.extract_variable_all() end,
+        { desc = "Extract Variable", buffer = bufnr })
+
+    vim.keymap.set("v", "<leader>je", "<Esc><Cmd>lua require('jdtls').extract_variable_all({ visual = true })<CR>",
+        { desc = "Extract Variable", buffer = bufnr })
+
     vim.keymap.set("n", "<leader>jg",
-        function() vim.lsp.buf.code_action({ context = { only = { "source.generate" } } }) end,
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        function() vim.lsp.buf.code_action({ context = { only = { "source.generate", "source.overrideMethods" } }, }) end,
         { desc = "Generate Menu", buffer = bufnr })
 
     -- Commands
@@ -152,8 +136,10 @@ local function jdtls_on_attach(client, bufnr)
     -- Testing
     vim.keymap.set("n", "<leader>jtp", function() jdtls.pick_test(test_opts) end,
         { desc = "Pick Test Method", buffer = bufnr })
+
     vim.keymap.set("n", "<leader>jtm", function() jdtls.test_nearest_method(test_opts) end,
         { desc = "Test Method Under Cursor", buffer = bufnr })
+
     vim.keymap.set("n", "<leader>jtc", function() jdtls.test_class(test_opts) end,
         { desc = "Test Entire Class", buffer = bufnr })
 
@@ -162,10 +148,13 @@ local function jdtls_on_attach(client, bufnr)
 
     vim.keymap.set("n", "<leader>jbc", function() boiler.generate_java_boilerplate("class") end,
         { desc = "New Class", buffer = bufnr })
+
     vim.keymap.set("n", "<leader>jbe", function() boiler.generate_java_boilerplate("enum") end,
         { desc = "New Enum", buffer = bufnr })
+
     vim.keymap.set("n", "<leader>jbi", function() boiler.generate_java_boilerplate("interface") end,
         { desc = "New Interface", buffer = bufnr })
+
     vim.keymap.set("n", "<leader>jbs", function() boiler.sync_java_identifier_name() end,
         { desc = "Sync Name to Filename", buffer = bufnr })
 end
@@ -177,37 +166,25 @@ local function jdtls_setup()
         return {}
     end
 
-    local workspace_dir = path.workspace_dir .. "/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+    local workspace_dir = path.workspace_dir .. "/" .. vim.fn.fnamemodify(root_dir or vim.fn.getcwd(), ":p:h:t")
 
-    -- LSP capabilities to override
-    local capabilities = {
-        workspace = {
-            configuration = true,
-            fileOperations = {
-                dynamicRegistration = true,
-                didCreate = true,
-                willCreate = true,
-                didRename = true,
-                willRename = true,
-                didDelete = true,
-                willDelete = true,
-            },
-        },
-        textDocument = {
-            completion = {
-                completionItem = {
-                    snippetSupport = false,
-                },
-            },
-        },
-    }
-    capabilities = require("utils.lsp-setup").setup_capabilities(capabilities)
+    -- nvim-jdtls starts jdtls via vim.lsp.start(), which skips vim.lsp.config("*"),
+    -- so we can just pass the shared capabilities (blink.cmp + lsp-file-operations) explicitly
+    local capabilities = vim.lsp.config["*"].capabilities
 
-    -- JDTLS capabilities
-    jdtls.extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+    require("jdtls.dap").setup_dap({ config_overrides = { console = "internalConsole" } })
 
     local cmd = {
         "java",
+
+        -- JVM options
+        "-XX:+UseParallelGC",
+        "-XX:GCTimeRatio=4",
+        "-XX:AdaptiveSizePolicyWeight=90",
+        "-Dsun.zip.disableMemoryMapping=true",
+        "-Xmx10G",
+        "-Xms256m",
+        "-Xlog:disable",
 
         "-Declipse.application=org.eclipse.jdt.ls.core.id1",
         "-Dosgi.bundles.defaultStartLevel=4",
@@ -235,18 +212,6 @@ local function jdtls_setup()
 
     local settings = {
         java = {
-            jdt = {
-                ls = {
-                    -- You can define the java home especially for the JDTLS server here. In this way it doesn't matter what is your JAVA_HOME environmental variable anymore.
-                    -- Convenient to solve version mismatches for some old projects
-                    -- java = { home = path.runtimes[1].path },
-                    vmargs =
-                    "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx10G -Xms256m",
-                },
-            },
-            server = {
-                launchMode = "Hybrid",
-            },
             edit = {
                 validateAllOpenBuffersOnChanges = true,
             },
@@ -266,9 +231,7 @@ local function jdtls_setup()
             maven = {
                 downloadSources = true,
             },
-            implementationsCodeLens = {
-                enabled = true,
-            },
+            implementationCodeLens = "all",
             references = {
                 includeDecompiledSources = true,
             },
@@ -286,48 +249,47 @@ local function jdtls_setup()
             format = {
                 enabled = true,
                 settings = {
-                    profile = vim.fn.stdpath("config") .. "/format-styles/perfect-intellij-formatting.xml",
-                    -- profile = root_dir .. "/logistica/eclipseCodeStyle.xml",
+                    url = vim.fn.stdpath("config") .. "/format-styles/perfect-intellij-formatting.xml",
+                    -- url = root_dir .. "/logistica/eclipseCodeStyle.xml",
                 },
             },
-        },
-        signatureHelp = {
-            enabled = false,
-        },
-        completion = {
-            favoriteStaticMembers = {
-                "org.hamcrest.MatcherAssert.assertThat",
-                "org.hamcrest.Matchers.*",
-                "org.hamcrest.CoreMatchers.*",
-                "org.junit.jupiter.api.Assertions.*",
-                "java.util.Objects.requireNonNull",
-                "java.util.Objects.requireNonNullElse",
-                "org.mockito.Mockito.*",
+            signatureHelp = {
+                enabled = false,
             },
-            filteredTypes = {
-                "com.sun.*",
-                "io.micrometer.shaded.*",
-                "java.awt.*",
-                "jdk.*",
-                "sun.*",
+            completion = {
+                favoriteStaticMembers = {
+                    "org.hamcrest.MatcherAssert.assertThat",
+                    "org.hamcrest.Matchers.*",
+                    "org.hamcrest.CoreMatchers.*",
+                    "org.junit.jupiter.api.Assertions.*",
+                    "java.util.Objects.requireNonNull",
+                    "java.util.Objects.requireNonNullElse",
+                    "org.mockito.Mockito.*",
+                },
+                filteredTypes = {
+                    "com.sun.*",
+                    "io.micrometer.shaded.*",
+                    "java.awt.*",
+                    "jdk.*",
+                    "sun.*",
+                },
+                guessMethodArguments = true,
             },
-            guessMethodArguments = true,
-        },
-        contentProvider = {
-            preferred = "fernflower",
-        },
-        extendedClientCapabilities = jdtls.extendedClientCapabilities,
-        sources = {
-            organizeImports = {
-                starThreshold = 9999,
-                staticStarThreshold = 9999,
+            contentProvider = {
+                preferred = "fernflower",
             },
-        },
-        codeGeneration = {
-            toString = {
-                template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+            sources = {
+                organizeImports = {
+                    starThreshold = 9999,
+                    staticStarThreshold = 9999,
+                },
             },
-            useBlocks = true,
+            codeGeneration = {
+                toString = {
+                    template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+                },
+                useBlocks = true,
+            },
         },
     }
 
@@ -337,7 +299,6 @@ local function jdtls_setup()
         on_attach = jdtls_on_attach,
         capabilities = capabilities,
         root_dir = root_dir,
-        flags = { allow_incremental_sync = true },
         init_options = { bundles = path.bundles },
         handlers = { ["language/status"] = function() end },
     })

@@ -33,6 +33,11 @@ local cpp_tools = {
     "neocmakelsp"
 }
 
+local rust_tools = {
+    "codelldb",
+    "taplo",
+}
+
 local python_tools = {
     "basedpyright"
 }
@@ -54,6 +59,10 @@ end
 
 if features.cpp and features.cpp.enabled then
     vim.list_extend(tools, cpp_tools)
+end
+
+if features.rust and features.rust.enabled then
+    vim.list_extend(tools, rust_tools)
 end
 
 if features.python and features.python.enabled then

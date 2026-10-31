@@ -18,7 +18,7 @@ vim.keymap.set("v", "<", "<gv", { desc = "Unindent and keep selection", silent =
 vim.keymap.set("v", ">", ">gv", { desc = "Indent and keep selection", silent = true })
 vim.keymap.set("n", "<Esc>", "<cmd>nohl<cr>", { desc = "Clear highlights", silent = true })
 
-vim.keymap.set("n", "<leader>re", "<cmd>restart<cr>", { desc = "Neovim Config (:restart)", silent = true })
+vim.keymap.set("n", "<leader>we", "<cmd>restart<cr>", { desc = "Neovim Config (:restart)", silent = true })
 vim.keymap.set("n", "<leader>wv", "<cmd>vsplit<cr>", { desc = "Split Vertical", silent = true })
 vim.keymap.set("n", "<leader>wh", "<cmd>split<cr>", { desc = "Split Horizontal", silent = true })
 vim.keymap.set("n", "<leader>tr", "<cmd>set rnu!<cr>", { desc = "Relative Line Numbers", silent = true })

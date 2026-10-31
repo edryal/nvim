@@ -165,4 +165,13 @@ M.setup_cpp_debugger = function()
     dap.configurations.c = dap.configurations.cpp
 end
 
+M.setup_rust_debugger = function()
+    require("dap").listeners.on_config.rust_console = function(config)
+        if config.type == "codelldb" and config.terminal == nil then
+            config.terminal = "console"
+        end
+        return config
+    end
+end
+
 return M

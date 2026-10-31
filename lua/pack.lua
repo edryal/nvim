@@ -63,6 +63,11 @@ if features.go and features.go.enabled then
     table.insert(plugin_urls, "https://github.com/leoluz/nvim-dap-go")
 end
 
+if features.rust and features.rust.enabled then
+    table.insert(plugin_urls, { src = "https://github.com/mrcjkb/rustaceanvim", version = vim.version.range("^9") })
+    table.insert(plugin_urls, { src = "https://github.com/saecki/crates.nvim", version = "stable" })
+end
+
 vim.pack.add(plugin_urls)
 
 -- plugins that require configuration and setup
@@ -104,6 +109,11 @@ if features.java and features.java.enabled then
     if features.java.springboot then
         require("plugins.spring-boot")
     end
+end
+
+if features.rust and features.rust.enabled then
+    require("plugins.rustaceanvim")
+    require("plugins.crates")
 end
 
 require("plugins.nvim-dap")

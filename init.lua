@@ -10,5 +10,4 @@ require("pack")
 require("autocommands")
 require("lsp")
 
--- vim.cmd.colorscheme("onedark")
 vim.cmd.colorscheme("vague")

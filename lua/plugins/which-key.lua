@@ -24,6 +24,7 @@ require("which-key").setup({
             mode = { "n", "v" },
             { "<leader>c", group = "Code" },
             { "<leader>j", group = "Java" },
+            { "<leader>r", group = "Rust" },
             { "<leader>g", group = "Git" },
             { "<leader>s", group = "Search" },
         },

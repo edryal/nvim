@@ -30,3 +30,7 @@ end
 if features.cpp and features.cpp.enabled then
     util.setup_cpp_debugger()
 end
+
+if features.rust and features.rust.enabled then
+    util.setup_rust_debugger()
+end

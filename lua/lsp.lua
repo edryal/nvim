@@ -19,6 +19,10 @@ if features.typescript and features.typescript.enabled then
     table.insert(lsps, "vtsls")
 end
 
+if features.rust and features.rust.enabled then
+    table.insert(lsps, "taplo")
+end
+
 -- blink adds completion capabilities by default
 -- so we can just add lsp-file-operations capabilities on top
 vim.lsp.config("*", {

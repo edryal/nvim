@@ -12,12 +12,10 @@ return {
     cpp = {
         enabled = true
     },
-    -- getting rust-analyzer from Mason is not recommended
-    -- run this: rustup component add rust-analyzer rust-src
     rust = {
         enabled = true
     },
-    typescript = {
+    web = {
         enabled = true
     },
     python = {

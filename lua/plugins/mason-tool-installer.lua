@@ -6,7 +6,6 @@ local tools = {
     "bash-language-server",
     "shellcheck",
     "shfmt",
-    "prettier",
     "json-lsp",
 }
 
@@ -42,8 +41,11 @@ local python_tools = {
     "basedpyright"
 }
 
-local typescript_tools = {
-    "vtsls"
+local web_tools = {
+    "vtsls",
+    "css-lsp",
+    "html-lsp",
+    "biome",
 }
 
 if features.java and features.java.enabled then
@@ -69,8 +71,8 @@ if features.python and features.python.enabled then
     vim.list_extend(tools, python_tools)
 end
 
-if features.typescript and features.typescript.enabled then
-    vim.list_extend(tools, typescript_tools)
+if features.web and features.web.enabled then
+    vim.list_extend(tools, web_tools)
 end
 
 require("mason-tool-installer").setup({ ensure_installed = tools })

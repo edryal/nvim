@@ -15,18 +15,22 @@ if features.python and features.python.enabled then
     table.insert(lsps, "basedpyright")
 end
 
-if features.typescript and features.typescript.enabled then
-    table.insert(lsps, "vtsls")
+if features.web and features.web.enabled then
+    vim.list_extend(lsps, { "vtsls", "cssls", "html", "biome" })
 end
 
 if features.rust and features.rust.enabled then
     table.insert(lsps, "taplo")
 end
 
--- blink adds completion capabilities by default
--- so we can just add lsp-file-operations capabilities on top
+-- blink adds completion capabilities by default, add lsp-file-operations on top
 vim.lsp.config("*", {
     capabilities = require("lsp-file-operations").default_capabilities(),
+})
+
+-- offer UTF-16 only (what most servers use), so servers sharing a buffer agree on positions
+vim.lsp.config("*", {
+    capabilities = { general = { positionEncodings = { "utf-16" } } },
 })
 
 vim.lsp.enable(lsps)

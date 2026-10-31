@@ -14,5 +14,8 @@ return {
     },
     markdown = {
         enabled = true
+    },
+    python = {
+        enabled = true
     }
 }

@@ -11,5 +11,9 @@ if features.cpp and features.cpp.enabled then
     table.insert(lsps, "neocmake")
 end
 
+if features.python and features.python.enabled then
+    table.insert(lsps, "basedpyright")
+end
+
 vim.lsp.enable(lsps)
 vim.lsp.codelens.enable(true)

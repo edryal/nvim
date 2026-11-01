@@ -68,6 +68,12 @@ if features.rust and features.rust.enabled then
     table.insert(plugin_urls, { src = "https://github.com/saecki/crates.nvim", version = "stable" })
 end
 
+if features.database and features.database.enabled then
+    table.insert(plugin_urls, "https://github.com/tpope/vim-dadbod")
+    table.insert(plugin_urls, "https://github.com/kristijanhusak/vim-dadbod-ui")
+    table.insert(plugin_urls, "https://github.com/kristijanhusak/vim-dadbod-completion")
+end
+
 vim.pack.add(plugin_urls)
 
 -- plugins that require configuration and setup
@@ -114,6 +120,10 @@ end
 if features.rust and features.rust.enabled then
     require("plugins.rustaceanvim")
     require("plugins.crates")
+end
+
+if features.database and features.database.enabled then
+    require("plugins.dadbod")
 end
 
 require("plugins.nvim-dap")

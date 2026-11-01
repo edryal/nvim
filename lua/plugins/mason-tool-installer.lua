@@ -54,6 +54,10 @@ local devops_tools = {
     "yaml-language-server",
 }
 
+local database_tools = {
+    "postgres-language-server"
+}
+
 if features.java and features.java.enabled then
     vim.list_extend(tools, java_tools)
     if features.java.springboot then
@@ -83,6 +87,10 @@ end
 
 if features.devops and features.devops.enabled then
     vim.list_extend(tools, devops_tools)
+end
+
+if features.database and features.database.enabled then
+    vim.list_extend(tools, database_tools)
 end
 
 require("mason-tool-installer").setup({ ensure_installed = tools })

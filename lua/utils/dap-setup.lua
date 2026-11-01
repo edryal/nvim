@@ -87,18 +87,28 @@ M.setup_dap_breakpoint_colors = function()
     })
 end
 
-M.setup_dap_keymaps = function()
-    local dap = require("dap")
+-- debug keys only exist in buffers of languages that have a debugger enabled (and in the dap-ui panels)
+M.setup_dap_keymaps = function(filetypes)
+    local pattern = vim.list_extend({ "dap-repl", "dapui_*" }, filetypes)
 
-    vim.keymap.set("n", "<leader>ds", dap.continue, { desc = "Start/Continue" })
-    vim.keymap.set("n", "<leader>dt", dap.terminate, { desc = "Terminate Session" })
-    vim.keymap.set("n", "<leader>da", dap.toggle_breakpoint, { desc = "Add Breakpoint" })
-    vim.keymap.set("n", "<leader>dc", dap.clear_breakpoints, { desc = "Clear Breakpoints" })
-    vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "Step Over" })
-    vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Step Into" })
-    vim.keymap.set("n", "<leader>du", dap.step_out, { desc = "Step Out" })
-    vim.keymap.set("n", "<leader>dd", M.toggle_ui, { desc = "Dap UI" })
-    vim.keymap.set("n", "<leader>tv", "<cmd>DapVirtualTextToggle<cr>", { desc = "Dap Virtual Text" })
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = pattern,
+        callback = function(args)
+            local dap = require("dap")
+            require("which-key").add({ { "<leader>d", group = "Debug", buffer = args.buf } })
+
+            vim.keymap.set("n", "<leader>ds", dap.continue, { desc = "Start/Continue", buffer = args.buf })
+            vim.keymap.set("n", "<leader>dt", dap.terminate, { desc = "Terminate Session", buffer = args.buf })
+            vim.keymap.set("n", "<leader>da", dap.toggle_breakpoint, { desc = "Add Breakpoint", buffer = args.buf })
+            vim.keymap.set("n", "<leader>dc", dap.clear_breakpoints, { desc = "Clear Breakpoints", buffer = args.buf })
+            vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "Step Over", buffer = args.buf })
+            vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Step Into", buffer = args.buf })
+            vim.keymap.set("n", "<leader>du", dap.step_out, { desc = "Step Out", buffer = args.buf })
+            vim.keymap.set("n", "<leader>dd", M.toggle_ui, { desc = "Dap UI", buffer = args.buf })
+            vim.keymap.set("n", "<leader>tv", "<cmd>DapVirtualTextToggle<cr>",
+                { desc = "Dap Virtual Text", buffer = args.buf })
+        end,
+    })
 
     vim.api.nvim_create_autocmd("FileType", {
         pattern = { "dap-repl", "dapui_console" },

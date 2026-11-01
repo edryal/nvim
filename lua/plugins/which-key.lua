@@ -2,7 +2,6 @@ require("which-key").setup({
     spec = {
         {
             mode = { "n" },
-            { "<leader>d",  group = "Debug" },
             { "<leader>f",  group = "Find" },
             { "<leader>w",  group = "Window" },
             { "<leader>t",  group = "Toggle" },
@@ -16,7 +15,6 @@ require("which-key").setup({
 
             -- Java
             { "<leader>jt", group = "Test" },
-            { "<leader>jd", group = "Debug" },
             { "<leader>jb", group = "Boilerplate" },
             { "<leader>jj", group = "Jacoco" },
         },

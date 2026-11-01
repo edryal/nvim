@@ -37,6 +37,10 @@ if features.devops and features.devops.enabled then
     })
 end
 
+if features.database and features.database.enabled then
+    table.insert(lsps, "postgres_lsp")
+end
+
 -- blink adds completion capabilities by default, add lsp-file-operations on top
 vim.lsp.config("*", {
     capabilities = require("lsp-file-operations").default_capabilities(),

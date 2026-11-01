@@ -18,6 +18,7 @@ local ensure_installed = {
     "dockerfile",
     "groovy",
     "xml",
+    "sql",
     "toml",
     "yaml",
     "markdown",

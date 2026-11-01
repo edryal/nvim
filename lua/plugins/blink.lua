@@ -1,3 +1,17 @@
+local features = require("features")
+
+local per_filetype = {
+    lua = { "lazydev", inherit_defaults = true },
+}
+local providers = {
+    lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 100 },
+}
+
+if features.database and features.database.enabled then
+    per_filetype.sql = { "dadbod", inherit_defaults = true }
+    providers.dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" }
+end
+
 require("blink.cmp").build():pwait()
 require("blink.cmp").setup({
     enabled = function()
@@ -31,12 +45,8 @@ require("blink.cmp").setup({
     appearance = { nerd_font_variant = "mono" },
     sources = {
         default = { "lsp", "path", "buffer" },
-        per_filetype = {
-            lua = { "lazydev", inherit_defaults = true },
-        },
-        providers = {
-            lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 100 },
-        },
+        per_filetype = per_filetype,
+        providers = providers,
     },
     fuzzy = { implementation = "rust" },
 })

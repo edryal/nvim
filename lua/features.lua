@@ -27,6 +27,9 @@ return {
     devops = {
         enabled = true
     },
+    database = {
+        enabled = true
+    },
     discord_presence = {
         enabled = true
     }

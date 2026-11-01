@@ -30,6 +30,7 @@ vim.opt.termguicolors = true
 vim.opt.cmdheight = 1
 vim.opt.showmode = false
 vim.opt.showmatch = true
+vim.opt.previewheight = 20
 
 vim.opt.swapfile = false
 vim.opt.backup = false

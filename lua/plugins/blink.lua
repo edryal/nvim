@@ -3,6 +3,7 @@ local features = require("features")
 local per_filetype = {
     lua = { "lazydev", inherit_defaults = true },
 }
+
 local providers = {
     lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 100 },
 }
@@ -12,8 +13,19 @@ if features.database and features.database.enabled then
     providers.dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" }
 end
 
-require("blink.cmp").build():pwait()
-require("blink.cmp").setup({
+local blink = require("blink.cmp")
+
+-- Use lua implementation while it builds in the background, then hot-swap to rust
+local rust_ready = blink.library_available()
+if not rust_ready then
+    blink.build():on_resolve(vim.schedule_wrap(function()
+        local fuzzy = require("blink.cmp.fuzzy")
+        fuzzy.set_implementation("rust")
+        fuzzy.has_init_db = false
+    end))
+end
+
+blink.setup({
     enabled = function()
         return not vim.tbl_contains({ "dap-repl", "dapui-console" }, vim.bo.filetype)
     end,
@@ -48,5 +60,5 @@ require("blink.cmp").setup({
         per_filetype = per_filetype,
         providers = providers,
     },
-    fuzzy = { implementation = "rust" },
+    fuzzy = { implementation = rust_ready and "rust" or "lua" },
 })

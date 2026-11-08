@@ -12,5 +12,13 @@ require("snacks").setup({
     },
 })
 
+-- Notifications
 vim.keymap.set("n", "<leader>nd", function() Snacks.notifier.hide() end, { desc = "Dismiss All Notifications" })
 vim.keymap.set("n", "<leader>nh", function() Snacks.notifier.show_history() end, { desc = "Notification History" })
+
+-- Buffers
+vim.keymap.set("n", "<leader>bo", function() Snacks.bufdelete.other() end,
+    { desc = "Close All Other Buffers", silent = true })
+
+vim.keymap.set("n", "<leader>bd", function() Snacks.bufdelete() end,
+    { desc = "Close Current Buffer", silent = true })

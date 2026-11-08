@@ -4,16 +4,13 @@ vim.api.nvim_create_autocmd("FileType", {
         "qf",
         "help",
         "man",
-        "lspinfo",
-        "notify",
         "toggleterm",
         "fugitive",
+        "nvim-undotree",
     },
-    callback = function()
-        vim.cmd([[
-          nnoremap <silent> <buffer> q <cmd>close<cr>
-          set nobuflisted
-        ]])
+    callback = function(args)
+        vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = args.buf, silent = true, desc = "Close Window" })
+        vim.bo[args.buf].buflisted = false
     end,
 })
 
@@ -26,20 +23,22 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 local disable_useless_diagnostics = vim.api.nvim_create_augroup("DisableUselessDiagnostics", { clear = true })
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-    desc = "Disable diagnostics for specific directories",
-    pattern = {
-        "**/node_modules",
-        "**/target",
-    },
-    callback = function()
-        vim.diagnostic.enable(false)
+    desc = "Disable diagnostics for files inside node_modules/target",
+    pattern = { "*/node_modules/*", "*/target/*" },
+    callback = function(args)
+        vim.diagnostic.enable(false, { bufnr = args.buf })
     end,
     group = disable_useless_diagnostics,
 })
 
 vim.api.nvim_create_autocmd("PackChanged", {
+    desc = "Update treesitter parsers after nvim-treesitter is installed or updated",
     callback = function(ev)
-        if ev.data.spec.name == "nvim-treesitter" then
+        local name, kind = ev.data.spec.name, ev.data.kind
+        if name == "nvim-treesitter" and (kind == "install" or kind == "update") then
+            if not ev.data.active then
+                vim.cmd.packadd("nvim-treesitter")
+            end
             vim.cmd("TSUpdate")
         end
     end,

@@ -6,8 +6,8 @@ require("vim._core.ui2").enable({})
 
 require("options")
 require("keymaps")
-require("pack")
 require("autocommands")
+require("pack")
 require("lsp")
 
 vim.cmd.colorscheme("vague")

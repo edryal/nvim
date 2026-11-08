@@ -7,15 +7,12 @@ local green = "#9ece6a"
 local blue = "#3d59a1"
 
 require("onedarkpro").setup({
-    plugins = { all = true },
     styles = {
         comments = "italic",
         keywords = "bold,italic",
         conditionals = "italic",
     },
-    colors = {
-        onedark = { bg = black },
-    },
+    colors = { onedark = { bg = black } },
     highlights = {
         NvimTreeRootFolder = { link = "Normal", style = "bold" },
         NvimTreeFolderIcon = { fg = red },
@@ -28,8 +25,5 @@ require("onedarkpro").setup({
         ["@variable.builtin"] = { fg = purple, italic = true },
         ["@function.builtin.java"] = { fg = purple, italic = true }
     },
-    options = {
-        cursorline = false,
-        transparency = true,
-    },
+    options = { cursorline = false, transparency = true },
 })

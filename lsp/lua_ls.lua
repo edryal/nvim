@@ -13,9 +13,6 @@ return {
                 enable = true,
                 semicolon = "Disable"
             },
-            diagnostics = {
-                globals = { "Snacks", "FzfLua" }
-            },
         },
     },
 }

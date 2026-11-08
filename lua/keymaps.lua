@@ -22,8 +22,6 @@ vim.keymap.set("n", "<leader>we", "<cmd>restart<cr>", { desc = "Neovim Config (:
 vim.keymap.set("n", "<leader>wv", "<cmd>vsplit<cr>", { desc = "Split Vertical", silent = true })
 vim.keymap.set("n", "<leader>wh", "<cmd>split<cr>", { desc = "Split Horizontal", silent = true })
 vim.keymap.set("n", "<leader>tr", "<cmd>set rnu!<cr>", { desc = "Relative Line Numbers", silent = true })
-vim.keymap.set("n", "<leader>bo", "<cmd>BufDelOthers<cr>", { desc = "Close All Other Buffers", silent = true })
-vim.keymap.set("n", "<leader>bd", "<cmd>BufDel<cr>", { desc = "Close Current Buffer", silent = true })
 
 -- Don't record macro on Alt + q
 vim.keymap.set("n", "<A-q>", "", { silent = true })

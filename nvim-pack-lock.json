@@ -30,7 +30,7 @@
       "src": "https://github.com/j-hui/fidget.nvim"
     },
     "fzf-lua": {
-      "rev": "bea6a134d2228a7766debd61dedb301c69b57e16",
+      "rev": "d648fe1c6fb62a27fda0247313e94ae536843e9b",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -72,10 +72,6 @@
     "mini.pairs": {
       "rev": "03eb1f0062a2cee5314d1ac3939246e4bb21352e",
       "src": "https://github.com/nvim-mini/mini.pairs"
-    },
-    "nvim-bufdel": {
-      "rev": "523d58e94e7212fff3e05c247b962dc8f93bcfde",
-      "src": "https://github.com/ojroques/nvim-bufdel"
     },
     "nvim-dap": {
       "rev": "cfa2d58f4537aca6ca83e2de1a0d9f1491121264",

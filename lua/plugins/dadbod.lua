@@ -57,6 +57,7 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "sql",
     callback = function(args)
         vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "TextChanged", "TextChangedI" }, {
+            group = vim.api.nvim_create_augroup("SqlStatementHighlight_" .. args.buf, { clear = true }),
             buffer = args.buf,
             callback = function()
                 vim.api.nvim_buf_clear_namespace(args.buf, statement_ns, 0, -1)

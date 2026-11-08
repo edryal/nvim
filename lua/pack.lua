@@ -53,9 +53,13 @@ if features.discord_presence and features.discord_presence.enabled then
 end
 
 if features.java and features.java.enabled then
-    table.insert(plugin_urls, "https://github.com/mfussenegger/nvim-jdtls")
-    if features.java.springboot then
-        table.insert(plugin_urls, "https://github.com/JavaHello/spring-boot.nvim")
+    if features.java.lsp == "jdtls" then
+        table.insert(plugin_urls, "https://github.com/mfussenegger/nvim-jdtls")
+        if features.java.springboot then
+            table.insert(plugin_urls, "https://github.com/JavaHello/spring-boot.nvim")
+        end
+    elseif features.java.lsp == "intellij" then
+        table.insert(plugin_urls, "https://github.com/JetBrains/intellij-lsp.nvim")
     end
 end
 
@@ -112,8 +116,10 @@ if features.discord_presence and features.discord_presence.enabled then
 end
 
 if features.java and features.java.enabled then
-    if features.java.springboot then
+    if features.java.lsp == "jdtls" and features.java.springboot then
         require("plugins.spring-boot")
+    elseif features.java.lsp == "intellij" then
+        require("plugins.intellij")
     end
 end
 

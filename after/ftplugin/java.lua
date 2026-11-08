@@ -1,4 +1,5 @@
-if vim.bo.filetype ~= "java" then
+local features = require("features")
+if vim.bo.filetype ~= "java" or features.java.lsp ~= "jdtls" then
     return
 end
 

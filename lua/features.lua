@@ -4,7 +4,10 @@
 return {
     java = {
         enabled = true,
-        springboot = true
+        springboot = false,
+
+        -- "jdtls" | "intellij"
+        lsp = "intellij"
     },
     go = {
         enabled = true

@@ -7,13 +7,13 @@ local tools = {
     "shellcheck",
     "shfmt",
     "json-lsp",
+    "lemminx",
 }
 
-local java_tools = {
+local jdtls_tools = {
     "jdtls",
     "java-test",
     "java-debug-adapter",
-    "lemminx",
 }
 
 local springboot_tools = {
@@ -59,9 +59,11 @@ local database_tools = {
 }
 
 if features.java and features.java.enabled then
-    vim.list_extend(tools, java_tools)
-    if features.java.springboot then
-        vim.list_extend(tools, springboot_tools)
+    if features.java.lsp == "jdtls" then
+        vim.list_extend(tools, jdtls_tools)
+        if features.java.springboot then
+            vim.list_extend(tools, springboot_tools)
+        end
     end
 end
 

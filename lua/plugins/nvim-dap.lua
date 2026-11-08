@@ -22,7 +22,9 @@ util.setup_dap_breakpoint_colors()
 local debug_filetypes = {}
 
 if features.java and features.java.enabled then
-    util.setup_java_debugger()
+    if features.java.lsp == "jdtls" then
+        util.setup_java_debugger()
+    end
     table.insert(debug_filetypes, "java")
 end
 

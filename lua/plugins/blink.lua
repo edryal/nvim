@@ -18,11 +18,24 @@ local blink = require("blink.cmp")
 -- Use lua implementation while it builds in the background, then hot-swap to rust
 local rust_ready = blink.library_available()
 if not rust_ready then
-    blink.build():on_resolve(vim.schedule_wrap(function()
-        local fuzzy = require("blink.cmp.fuzzy")
-        fuzzy.set_implementation("rust")
-        fuzzy.has_init_db = false
-    end))
+    local function notify(msg, level)
+        vim.notify(msg, level, { id = "blink_build", title = "blink.cmp" })
+    end
+
+    vim.schedule(function()
+        notify("Building Rust matcher, using Lua for now", vim.log.levels.WARN)
+    end)
+
+    blink.build()
+        :on_resolve(vim.schedule_wrap(function()
+            local fuzzy = require("blink.cmp.fuzzy")
+            fuzzy.set_implementation("rust")
+            fuzzy.has_init_db = false
+            notify("Switched to Rust matcher", vim.log.levels.INFO)
+        end))
+        :on_reject(vim.schedule_wrap(function()
+            notify("Build failed, staying on Lua (:BlinkCmp build-log)", vim.log.levels.ERROR)
+        end))
 end
 
 blink.setup({

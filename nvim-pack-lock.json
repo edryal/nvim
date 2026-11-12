@@ -30,7 +30,7 @@
       "src": "https://github.com/j-hui/fidget.nvim"
     },
     "fzf-lua": {
-      "rev": "d648fe1c6fb62a27fda0247313e94ae536843e9b",
+      "rev": "ded1c96d3d9d74634287d722431c26690968a4bf",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -46,7 +46,7 @@
       "src": "https://github.com/3rd/image.nvim"
     },
     "intellij-lsp.nvim": {
-      "rev": "77dc3e118a381e59f0d0b3e368e4b3a088280ab7",
+      "rev": "0409b0a229b145525d724c08a541ac0f0d2d4433",
       "src": "https://github.com/JetBrains/intellij-lsp.nvim"
     },
     "kanagawa.nvim": {
@@ -102,7 +102,7 @@
       "src": "https://github.com/nvim-neotest/nvim-nio"
     },
     "nvim-tree.lua": {
-      "rev": "7e1da84aaffb413e1fa47b3895e5caa12501142d",
+      "rev": "5cc8d425c2bf3c09041a2db3cfff6197e2dce34d",
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-treesitter": {
@@ -130,7 +130,7 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "render-markdown.nvim": {
-      "rev": "8e8795368391036643b622875a6da6a51bcd33f4",
+      "rev": "9c235bedc4f96145e63fcad5b78cd78bce8822c4",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rose-pine": {

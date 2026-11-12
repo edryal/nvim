@@ -24,7 +24,7 @@ vim.opt.winborder = "bold"
 
 vim.opt.signcolumn = "yes"
 vim.opt.showmode = false
-vim.opt.showmatch = true
+vim.opt.showmatch = false
 vim.opt.previewheight = 20
 
 vim.opt.swapfile = false

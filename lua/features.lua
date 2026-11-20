@@ -35,5 +35,8 @@ return {
     },
     discord_presence = {
         enabled = true
+    },
+    leetcode = {
+        enabled = true
     }
 }

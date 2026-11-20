@@ -51,6 +51,11 @@ if features.discord_presence and features.discord_presence.enabled then
     table.insert(plugin_urls, "https://github.com/vyfor/cord.nvim")
 end
 
+if features.leetcode and features.leetcode.enabled then
+    table.insert(plugin_urls, "https://github.com/MunifTanjim/nui.nvim")
+    table.insert(plugin_urls, "https://github.com/kawre/leetcode.nvim")
+end
+
 if features.java and features.java.enabled then
     if features.java.lsp == "jdtls" then
         table.insert(plugin_urls, "https://github.com/mfussenegger/nvim-jdtls")
@@ -112,6 +117,10 @@ end
 
 if features.discord_presence and features.discord_presence.enabled then
     require("plugins.cord")
+end
+
+if features.leetcode and features.leetcode.enabled then
+    require("plugins.leetcode")
 end
 
 if features.java and features.java.enabled then
